@@ -1,30 +1,64 @@
 module Keys {
-    export interface cipherKeyInfo<type> {
-        startGen: () => type;
-        startRnd?: () => type;
-        generator: (input: type) => type;
-        occurences: number;
-        change?: (prev: type) => type;
-        converstions?: {
+    export interface KeyType<type> {
+        generateOrdered(start?: type, infinite?: boolean): Iterable<type>;
+        /**Sees if the input is a valid key, if it is convert it to the required
+          * primitive value, if it isn't throws an InvalidKeyException*/
+        getPrimitiveKey(value: any): type;
+        generateRandom?: Iterable<type>;
+        range: number;
+        conversions?: {
             typeFrom: string;
             convert: (from: any) => type
         }[];
         changeParameters?: Function;
         fixedLength?: number;
     }
-    export function numbers(min: number, max: number): cipherKeyInfo<number> {
-        return {
-            startGen: () => min,
-            generator: (input: number) => input + 1,
-            occurences: max - min,
-            change: (prev) => {
-                console.error("Not Implemented");
-                return prev
-            },
+    export class Integer implements KeyType<number>{
+        private min: number;
+        private max: number;
+
+        getPrimitiveKey(inputKey: string | number){
+            var potentialValue: number;
+            if(typeof inputKey === "string"){
+                potentialValue = parseInt(inputKey);
+                if(isNaN(potentialValue)){
+                    throw new Error(`${inputKey} is an invalid key`)
+                }
+            }
+            else{
+                potentialValue = inputKey;
+            }
+
+            if(potentialValue > this.min && potentialValue < this.max){
+                return potentialValue;
+            }
+            else{
+                throw new Error(`${inputKey} is an invalid key`)
+            }
+        }
+
+        get range(){
+            return this.max - this.min;
+        }
+
+        *generateOrdered(start = this.min, infinite = false){
+            if(!infinite && (this.range == Infinity)){
+                throw new RangeError(`[generateOrdered] - generating over
+                    infinite range, infinite is set to false`);
+            }
+            for(var i = start;i <= this.max; i++){
+                yield i;
+            }
+        }
+
+        constructor(min = -Infinity, max = Infinity){
+            this.min = min;
+            this.max = max;
         }
     }
-    export abstract class repeatedBaseClass<type extends {
+    export abstract class CollectionKey<type extends {
         length: number
+        [index: number]: any
     }>{
         constructor(selectionArr: type, keyLength) {
             this.changeParameters(keyLength, selectionArr);
@@ -41,7 +75,7 @@ module Keys {
         selectionArr: type;
         occurences: number;
     }
-    export class repeatedCharaters<type> extends repeatedBaseClass<type[]> implements cipherKeyInfo<Array<type>> {
+    export class repeatedCharaters<type> extends CollectionKey<type[]> implements KeyType<type[]> {
         constructor(selectionArr: type[], keyLength = 5) {
             super(selectionArr, keyLength);
         }
@@ -92,7 +126,7 @@ module Keys {
             super(selectionArr, keyLength);
         }
     }
-    export class repeatedLetters extends repeatedBaseClass<string>  implements cipherKeyInfo<string> {
+    export class repeatedLetters extends CollectionKey<string> implements KeyType<string> {
         constructor(selectionArr: string, keyLength = 5) {
             super(selectionArr, keyLength);
         }
@@ -227,7 +261,7 @@ module Keys {
         }
         return array;
     }
-    export class arrangementOfLetters implements cipherKeyInfo<string>{
+    export class arrangementOfLetters implements KeyType<string>{
         occurences: number;
         private text: string;
         fixedLength: number;
@@ -275,7 +309,7 @@ module Keys {
             }
         }]*/
     }
-    export class arrangementOfNumbers implements cipherKeyInfo<number[]>{
+    export class arrangementOfNumbers implements KeyType<number[]>{
         keyLength: number;
         occurences: number;
         private text: number[];

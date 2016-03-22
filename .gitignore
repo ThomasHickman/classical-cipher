@@ -3,8 +3,9 @@
 # For compiled typescript files
 *.js
 
-# installed typings
+.idea
 
+# installed typings
 typings
 
 # Created by https://www.gitignore.io/api/node
