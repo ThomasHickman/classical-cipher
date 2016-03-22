@@ -3,10 +3,7 @@ import Keys = require("./../Keys");
 import {
     letterCodeMap,
     cMod,
-    longFindColLength,
     undoPermutation,
-    arrayOutEven,
-    arrayOutOdd,
     applyPermutation,
     transpose,
     letterCodeInputMap,
@@ -147,7 +144,7 @@ export class playfair extends Cipher<string>{
     }
     rawDecrypt(input: string, key: string) {
         var size = 5;
-        function getsquareletter(x, y) {
+        function getSquareLetter(x, y) {
             var retvalue = key[(y - 1) + ((x - 1) * size)];
             if (retvalue == "_") {
                 // Blank charater
@@ -156,7 +153,7 @@ export class playfair extends Cipher<string>{
             }
             return retvalue;
         }
-        function getsquarepos(letter) {
+        function getSquarePos(letter) {
             var pos = key.indexOf(letter);
             if (pos == -1) {
                 invaidlettergot = true;
@@ -176,8 +173,8 @@ export class playfair extends Cipher<string>{
         for (var i = 0; i < input.length; i += 2) {
             var a = input[i];
             var b = input[i + 1];
-            var sqposa = getsquarepos(a);
-            var sqposb = getsquarepos(b);
+            var sqposa = getSquarePos(a);
+            var sqposb = getSquarePos(b);
             /*
              * if (a == b) { //Same letter //Replace second letter with x finalst +=
              * a + "X"; i -= 2; what = finalst; } else
@@ -187,16 +184,16 @@ export class playfair extends Cipher<string>{
                 // 1st
                 if (sqposa[1] == 1) {
                     // Wrap round
-                    finalst += getsquareletter(sqposa[0], size);
+                    finalst += getSquareLetter(sqposa[0], size);
                 } else {
-                    finalst += getsquareletter(sqposa[0], sqposa[1] - 1);
+                    finalst += getSquareLetter(sqposa[0], sqposa[1] - 1);
                 }
                 // 2nd
                 if (sqposb[1] == 1) {
                     // Wrap round
-                    finalst += getsquareletter(sqposb[0], size);
+                    finalst += getSquareLetter(sqposb[0], size);
                 } else {
-                    finalst += getsquareletter(sqposb[0], sqposb[1] - 1);
+                    finalst += getSquareLetter(sqposb[0], sqposb[1] - 1);
                 }
             } else if (sqposa[1] == sqposb[1]) {
                 // Same collom
@@ -204,24 +201,24 @@ export class playfair extends Cipher<string>{
                 // 1st
                 if (sqposa[0] == 1) {
                     // Wrap round
-                    finalst += getsquareletter(size, sqposa[1]);
+                    finalst += getSquareLetter(size, sqposa[1]);
                 } else {
-                    finalst += getsquareletter(sqposa[0] - 1, sqposa[1]);
+                    finalst += getSquareLetter(sqposa[0] - 1, sqposa[1]);
                 }
                 // 2nd
                 if (sqposb[0] == 1) {
                     // Wrap round
-                    finalst += getsquareletter(size, sqposb[1]);
+                    finalst += getSquareLetter(size, sqposb[1]);
                 } else {
-                    finalst += getsquareletter(sqposb[0] - 1, sqposb[1]);
+                    finalst += getSquareLetter(sqposb[0] - 1, sqposb[1]);
                 }
             } else {
                 // No trend
                 // Do rectangle
                 // 1st
-                finalst += getsquareletter(sqposa[0], sqposb[1]);
+                finalst += getSquareLetter(sqposa[0], sqposb[1]);
                 // 2nd
-                finalst += getsquareletter(sqposb[0], sqposa[1]);
+                finalst += getSquareLetter(sqposb[0], sqposa[1]);
             }
             // See if an invalid letter has been used and replace it with _
             if (invaidlettergot) {
