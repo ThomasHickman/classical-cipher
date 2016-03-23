@@ -1,9 +1,16 @@
+### editors ###
+
+# webstorm
+.idea
+
+# visual studio code
+.vscode
+
 ### typescript ###
 
 # For compiled typescript files
 *.js
-
-.idea
+*.js.map
 
 # installed typings
 typings

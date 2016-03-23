@@ -1,8 +1,6 @@
 import Keys = require("./keys")
 import _ = require("lodash");
 
-var allCiphers = <Cipher<any>[]>[];
-
 interface EncyptionOptions{
     formatResult?: boolean
 }
@@ -17,6 +15,7 @@ export interface solvedCipherInfo<keyType> {
 }
 
 export abstract class Cipher<keyType>{
+    static allCiphers = <Cipher<any>[]>[];
     static unformat(text: string){
         var output = "";
         for (var i = 0; i < text.length; i++) {
@@ -34,7 +33,7 @@ export abstract class Cipher<keyType>{
     static format(text: string, original: string){
         var output = "";
         var inputNumOn = 0;
-        for (var i = 0; i < text.length; i++) {
+        for (var i = 0; i < original.length; i++) {
             var charCode = original[i].charCodeAt(0);
             if (charCode >= 97 /*a*/ && charCode <= 122 /*z*/) {
                 output += text[inputNumOn++].toLowerCase();
@@ -50,9 +49,9 @@ export abstract class Cipher<keyType>{
     }
 
     constructor() {
-        allCiphers.push(this);
+        Cipher.allCiphers.push(this);
     }
-    abstract name: string;
+    name: string;
     /** Encrypts without checking the key, converting the key or formatting the key*/
     abstract rawEncrypt(input: string, key: keyType): string;
     /** Encrypts without checking the key, converting the key or formatting the key*/
@@ -62,7 +61,7 @@ export abstract class Cipher<keyType>{
                                     options: EncyptionOptions,
                                     operation: (input: string, key: keyType) => string){
         _.defaults(options, EncyptionOptionsDefault) // Modifies options
-        var decryptedText = this.rawEncrypt(Cipher.unformat(input), this.keyType.getPrimitiveKey(key))
+        var decryptedText = operation(Cipher.unformat(input), this.keyInfo.getPrimitiveKey(key))
         return options.formatResult? Cipher.format(decryptedText, input) : decryptedText;
     }
     encrypt (input: string, key: any, options: EncyptionOptions = {}){
@@ -80,5 +79,5 @@ export abstract class Cipher<keyType>{
     solve(x: void){
         return Error("Not implemented yet");
     };
-    keyType: Keys.KeyType<keyType>;
+    keyInfo: Keys.KeyType<keyType>;
 }

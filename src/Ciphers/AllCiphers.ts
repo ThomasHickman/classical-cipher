@@ -16,7 +16,9 @@ import {
     uppercaseLetters,
     factorial,
     generateUniformArray
-} from "./../common.ts"
+} from "./../common"
+
+import _ = require("lodash")
 
 export var caesarShift = new(class extends Cipher<number>{
     name = "Caesar Shift";
@@ -33,7 +35,7 @@ var hillCiphersInverses = [NaN, 1, NaN, 9, NaN, 21, NaN, 15, NaN, 3, NaN, 19, Na
 
 export var hillCipher = new(class extends Cipher<number[]>{
     name = "Hill Cipher";
-    keyInfo = new Keys.repeatedNumbers({ from: 0, to: 25 });
+    keyInfo = new Keys.FixedArrangementOfNumbers(0, 25);
     rawEncrypt(input: string, key: number[]) {
         var retValue = "";
         var matrixDimentions = Math.sqrt(key.length);
@@ -67,12 +69,12 @@ export var hillCipher = new(class extends Cipher<number[]>{
             retValue += fromLetterCode(cMod((- key[2] * numBiGram[0] + key[0] * numBiGram[1]) * inverseDet, 26));
         }
         return retValue;
-    }
+    } 
 })
 
 export var columnarTransposition = new(class extends Cipher<number[]>{
     name = "Columnar Transposition";
-    keyInfo = new Keys.arrangementOfNumbers()
+    keyInfo = new Keys.FixedArrangementOfNumbers(1, 10)
     rawEncrypt(input: string, key: number[]) {
         if (input.length % key.length != 0) {
             var inputLen = input.length;
@@ -113,8 +115,8 @@ export var columnarTransposition = new(class extends Cipher<number[]>{
 })
 
 export var amsco = new(class Amsco extends Cipher<number[]>{
-    name = "amsco";
-    keyInfo = new Keys.arrangementOfNumbers();
+    name = "Amsco";
+    keyInfo = new Keys.Arrangement(new Keys.Integer(0));
     private getAmscoColumns(input: string, keyLength: number){
         return <string[][]>transpose(
                 _.chain(input.split(""))
@@ -134,7 +136,7 @@ export var amsco = new(class Amsco extends Cipher<number[]>{
 
 export var simpleSubstitution = new(class extends Cipher<string>{
     name = "Simple Substitution";
-    keyInfo = new Keys.arrangementOfLetters(uppercaseLetters)
+    keyInfo = new Keys.FixedArrangement(uppercaseLetters.split(""))
     rawEncrypt (input: string, key: string){
         return letterCodeInputMap(input, (el) => key[el])
     }
@@ -145,7 +147,7 @@ export var simpleSubstitution = new(class extends Cipher<string>{
 
 export var playfair = new(class extends Cipher<string>{
     name = "Playfair"
-    keyInfo = new Keys.arrangementOfLetters("ABCDEFGHIKLMNOPQRSTUVWXYZ")
+    keyInfo = new Keys.FixedArrangement("ABCDEFGHIKLMNOPQRSTUVWXYZ".split(""))
     rawEncrypt(input: string, key: string) {
         console.error("Not Implemented"); return ""
     }
@@ -243,7 +245,7 @@ export var playfair = new(class extends Cipher<string>{
 
 export var vigenere = new(class extends Cipher<string>{
     name = "Vigenère";
-    keyInfo = new Keys.repeatedLetters(uppercaseLetters)
+    keyInfo = new Keys.FixedArrangement(uppercaseLetters.split(""))
     rawDecrypt(input: string, key: string){
         return letterCodeMap(input, (letter, n) => cMod(letter - toLetterCode(key[(n % key.length)]), 26))
     };

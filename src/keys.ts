@@ -11,17 +11,19 @@ module Keys {
         [index: number]: any;
     }
     export class InvalidKeyException extends Exception{
-        constructor(invalidKey: any){
-            super(`${invalidKey} is an invalid key`)
+        constructor(invalidKey: any, message?: string){
+            super(`${invalidKey} is an invalid key${message == undefined?"" : `, it ${message}`}`)
         }
     }
     export interface KeyType<internalKeyType> {
+        startGeneration(): internalKeyType;
         /** generates the logical next key, or if the next key is at the top, null*/
         generateOrdered(previous?: internalKeyType): internalKeyType;
         /**Sees if the input is a valid key, if it is convert it to the required
           * primitive value, if it isn't throws an Error*/
         getPrimitiveKey(value: any): internalKeyType;
-        generateRandom?: () => internalKeyType;
+        /**Generates a random key */
+        generateRandom: (...args) => internalKeyType;
         range: number;
         conversions?: {
             typeFrom: string;
@@ -50,7 +52,7 @@ module Keys {
                 return potentialValue;
             }
             else{
-                throw new InvalidKeyException(inputKey);
+                throw new InvalidKeyException(inputKey, "is out of the keys range");
             }
         }
 
@@ -62,7 +64,11 @@ module Keys {
             return this.max - this.min;
         }
 
-        generateOrdered(previous = this.min){
+        startGeneration(){
+            return this.min;
+        }
+
+        generateOrdered(previous: number){
             return previous == this.max? null : previous + 1;
         }
 
@@ -71,6 +77,20 @@ module Keys {
             this.max = max;
         }
     }
+
+    function testKeyType(key: any, expectedType: "number" | "string" | "object" | "array" | Function){
+        if(expectedType == "array"){
+            if(_.isArray(key)){
+                throw new InvalidKeyException(key, "is not an array")
+            }
+        }
+        else if(typeof expectedType === "object"){
+            if(key instanceof expectedType){
+
+            }
+        }
+    }
+
     export class NonUniqueArray<type> implements KeyType<type[]> {
         constructor(protected alphabet: type[], protected keyLength: number){}
 
@@ -83,11 +103,11 @@ module Keys {
                 return key
             }
             else{
-                throw new InvalidKeyException(key);
+                throw new InvalidKeyException(key, "it is not an array");
             }
         }
 
-        generateOrdered(previous = this.startGeneration()){
+        generateOrdered(previous: type[]){
             var newArr = previous;
             var i = 0;
             for(var i = 0;i<newArr.length;i++){
@@ -104,11 +124,11 @@ module Keys {
             return newArr;
         }
 
-        protected startGeneration() {
+        startGeneration() {
             return generateUniformArray(this.alphabet[0], this.keyLength);
         }
 
-        startRnd() {
+        generateRandom() {
             var rndStr = [];
             for (var i = 0; i < this.keyLength; i++) {
                 rndStr.push(this.alphabet[_.random(this.alphabet.length)]);
@@ -116,7 +136,7 @@ module Keys {
             return rndStr;
         }
     }
-    
+
     export class NonUniqueString implements KeyType<string> {
         constructor(protected alphabet: string, protected keyLength: number){}
 
@@ -129,11 +149,11 @@ module Keys {
                 return key
             }
             else{
-                throw new InvalidKeyException(key);
+                throw new InvalidKeyException(key, " it is not a string");
             }
         }
 
-        generateOrdered(previous = this.startGeneration()){
+        generateOrdered(previous: string){
             var newArr = previous;
             var i = 0;
             for(var i = 0;i<newArr.length;i++){
@@ -150,31 +170,16 @@ module Keys {
             return newArr;
         }
 
-        protected startGeneration() {
+        startGeneration() {
             return _.repeat(this.alphabet[0], this.keyLength);
         }
 
-        startRnd() {
+        generateRandom() {
             var rndStr = "";
             for (var i = 0; i < this.keyLength; i++) {
                 rndStr += this.alphabet[_.random(this.alphabet.length)];
             }
             return rndStr;
-        }
-    }
-
-
-    class NonUniqueNumbers extends NonUniqueArray<number> implements KeyType<number[]>{
-        getPrimitiveKey(key: any){
-            if(typeof key === "string"){
-                return super.getPrimitiveKey(key.split("").map(char => {
-                    let charToNum = parseInt(char);
-                    if(isNaN(charToNum)){
-                        throw new InvalidKeyException(key)
-                    }
-                }))
-            }
-            return super.getPrimitiveKey(key);
         }
     }
 
@@ -186,7 +191,7 @@ module Keys {
         }
         return retValue;
     }
-    
+
     function nextPermutation<t>(array: t[]) {
         // Find non-increasing suffix
         var i = array.length - 1;
@@ -214,19 +219,19 @@ module Keys {
         }
         return array;
     }
-    
-    export class Arrangement<type> implements KeyType<type[]>{
+
+    export class FixedArrangement<type> implements KeyType<type[]>{
         constructor(private alphabet: type[]) {
         }
-        
-        private startGeneration() {
+
+        startGeneration() {
             return this.alphabet;
         }
-        
+
         get range(){
             return factorial(this.alphabet.length)
         }
-        
+
         getPrimitiveKey(key: any){
             if(_.uniq(key).length == key.length && typeof key === "object"){
                 return key;
@@ -235,30 +240,73 @@ module Keys {
                 throw new InvalidKeyException(key);
             }
         }
-        
-        startRnd() {
+
+        generateRandom() {
             return _.shuffle(this.alphabet);
         }
-        
-        generateOrdered(previous = this.startGeneration()) {
+
+        generateOrdered(previous :type[]) {
             return nextPermutation(previous);
         }
     }
-    export class ArrangementOfNumbers extends Arrangement<number> implements KeyType<number[]>{
-        getPrimitiveKey(key: number[] | string){
-            if(_.isArray(key) && key.every(el => typeof el == "number")){
+
+    export class Arrangement<type> implements KeyType<type[]>{
+        startGeneration() {
+            return [this.elementKeyType.startGeneration()];
+        }
+
+        get range(){
+            return Infinity;
+        }
+
+        getPrimitiveKey(key: any){
+            if(_.uniq(key).length == key.length && typeof key === "object"){
                 return key;
             }
-            else if(typeof key === "string"){
-                return key.split("").map(digitStr => {
-                    var digit = parseInt(digitStr);
-                    if(isNaN(digit)){
-                        throw new InvalidKeyException(key);
-                    }
-                    return digit;
-                })
+            else{
+                throw new InvalidKeyException(key);
             }
-            throw new InvalidKeyException(key);
+        }
+
+        generateRandom(keyLength: number) {
+            var rndArr = new Array(keyLength);
+            _.times(keyLength, i => {
+                rndArr[i] = this.elementKeyType.generateRandom();
+            })
+            return rndArr;
+        }
+
+        generateOrdered(previous = this.startGeneration()) {
+            return nextPermutation(previous);
+        }
+
+        constructor(private elementKeyType: KeyType<type>){
+        }
+    }
+
+    function testNumericArrangementOfNumbers(key: number[] | string){
+        if(_.isArray(key) && key.every(el => typeof el == "number")){
+            return key;
+        }
+        else if(typeof key === "string"){
+            return key.split("").map(digitStr => {
+                var digit = parseInt(digitStr);
+                if(isNaN(digit)){
+                    throw new InvalidKeyException(key);
+                }
+                return digit;
+            })
+        }
+        throw new InvalidKeyException(key);
+    }
+
+    export class FixedArrangementOfNumbers extends FixedArrangement<number> implements KeyType<number[]>{
+        constructor(from: number, to: number){
+            super(_.range(from, to))
+        }
+
+        getPrimitiveKey(key: number[] | string){
+            return testNumericArrangementOfNumbers(key);
         }
     }
 }

@@ -1,15 +1,26 @@
 import assert = require("assert");
 import ciphers = require("./../src/Ciphers/AllCiphers")
+import {Cipher} from "./../src/Cipher";
+ciphers;
 
-describe("ciphers", function() {
-    describe("amsco cipher", function() {
-        it("should encrypt properly", () => {
-            /*assert.equal(ciphers.amsco.encrypt("ANGRIFFUMACHTUHR", "35124")
-                ,"RIHFTUANMRFUHGAC")*/
-            console.log("hi")
-            assert.equal(ciphers.caesarShift.decrypt(
-                    ciphers.caesarShift.encrypt("this is a test", 4), 4),
-                "this is a test")
-        })
-    });
+require("./../src/Ciphers/AllCiphers")
+
+describe("abstract ciphers", () => {
+    it("formats and unformats strings", () => {
+        assert(Cipher.unformat("Test string!"), "TESTSTRING")
+        assert(Cipher.format("TSTSSTRNGY", "Test string!"), "Tsts strngy!")
+    })
+});
+
+describe("Cipher", () => {
+    var testString = "this is a test string";
+    Cipher.allCiphers.forEach(cipher => {
+        describe(cipher.name, () => {
+            it("decryption of encryption should be a no-op", () => {
+                var randomKey = cipher.keyInfo.generateRandom();
+                assert.equal(cipher.decrypt(
+                    cipher.encrypt(testString, randomKey), randomKey), testString);
+            });
+        });
+    })
 });

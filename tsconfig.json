@@ -12,7 +12,10 @@
         "removeComments": true,
         "noLib": true,
         "preserveConstEnums": true,
-        "suppressImplicitAnyIndexErrors": true
+        "suppressImplicitAnyIndexErrors": true,
+        "sourceMap": true,
+        "watch": true,
+        "outFile": "bin/classical-cipher"
     },
     "filesGlob": [
         "**/*.ts",
@@ -32,9 +35,9 @@
         "src/index.ts",
         "src/keys.ts",
         "test/test.ts",
+        "typings/es6/lib.es6.d.ts",
         "typings/lodash/lodash.d.ts",
         "typings/mocha/mocha.d.ts",
-        "typings/node/node.d.ts",
-        "typings/es6/lib.es6.d.ts"
+        "typings/node/node.d.ts"
     ]
 }
