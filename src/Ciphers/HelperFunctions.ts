@@ -62,11 +62,3 @@ export function applyPermutation<type>(arr: type[], permutation: number[]) {
 export function transpose<type>(arr: type[]){
     return <type[]>_.zip.apply(_, arr)
 }
-
-export function generateUniformArray<type>(elementToRepeat: type, times: number, deep = false) {
-    var retValue = <type[]>[];
-    for (var i = 0; i < times; i++) {
-        retValue.push(deep ? <type>_.cloneDeep(elementToRepeat) : elementToRepeat);
-    }
-    return retValue;
-}

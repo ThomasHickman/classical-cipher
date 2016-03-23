@@ -7,11 +7,18 @@ import {
     applyPermutation,
     transpose,
     letterCodeInputMap,
-    letterCodeOutputMap,
-    generateUniformArray
+    letterCodeOutputMap
 } from "./HelperFunctions"
 
-export class CaesarShift extends Cipher<number>{
+import {
+    toLetterCode,
+    fromLetterCode,
+    uppercaseLetters,
+    factorial,
+    generateUniformArray
+} from "./../common.ts"
+
+export var caesarShift = new(class extends Cipher<number>{
     name = "Caesar Shift";
     keyInfo = new Keys.Integer(0, 25);
     rawEncrypt(input: string, key: number){
@@ -20,11 +27,11 @@ export class CaesarShift extends Cipher<number>{
     rawDecrypt(input: string, key: number){
         return letterCodeMap(input, (inp: number) => cMod((inp - key), 26))
     }
-}
+})
 
 var hillCiphersInverses = [NaN, 1, NaN, 9, NaN, 21, NaN, 15, NaN, 3, NaN, 19, NaN, NaN, NaN, 7, NaN, 23, NaN, 11, NaN, 5, NaN, 17, NaN, 25];
 
-class HillCipher extends Cipher<number[]>{
+export var hillCipher = new(class extends Cipher<number[]>{
     name = "Hill Cipher";
     keyInfo = new Keys.repeatedNumbers({ from: 0, to: 25 });
     rawEncrypt(input: string, key: number[]) {
@@ -61,9 +68,9 @@ class HillCipher extends Cipher<number[]>{
         }
         return retValue;
     }
-}
+})
 
-class ColumnarTransposition extends Cipher<number[]>{
+export var columnarTransposition = new(class extends Cipher<number[]>{
     name = "Columnar Transposition";
     keyInfo = new Keys.arrangementOfNumbers()
     rawEncrypt(input: string, key: number[]) {
@@ -103,9 +110,9 @@ class ColumnarTransposition extends Cipher<number[]>{
         };
         return coloums.join("");
     }
-}
+})
 
-class amsco extends Cipher<number[]>{
+export var amsco = new(class Amsco extends Cipher<number[]>{
     name = "amsco";
     keyInfo = new Keys.arrangementOfNumbers();
     private getAmscoColumns(input: string, keyLength: number){
@@ -123,9 +130,9 @@ class amsco extends Cipher<number[]>{
     rawEncrypt(input: string, key: number[]){
         return _.flatten(transpose(applyPermutation(this.getAmscoColumns(input, key.length), key))).join("")
     }
-}
+})
 
-export class simpleSubstitution extends Cipher<string>{
+export var simpleSubstitution = new(class extends Cipher<string>{
     name = "Simple Substitution";
     keyInfo = new Keys.arrangementOfLetters(uppercaseLetters)
     rawEncrypt (input: string, key: string){
@@ -134,9 +141,9 @@ export class simpleSubstitution extends Cipher<string>{
     rawDecrypt (input: string, key: string){
         return letterCodeOutputMap(input, (el) => key.search(el))
     }
-}
+})
 
-export class playfair extends Cipher<string>{
+export var playfair = new(class extends Cipher<string>{
     name = "Playfair"
     keyInfo = new Keys.arrangementOfLetters("ABCDEFGHIKLMNOPQRSTUVWXYZ")
     rawEncrypt(input: string, key: string) {
@@ -232,9 +239,9 @@ export class playfair extends Cipher<string>{
         }
         return finalst;
     }
-}
+})
 
-export class vigenere extends Cipher<string>{
+export var vigenere = new(class extends Cipher<string>{
     name = "Vigenère";
     keyInfo = new Keys.repeatedLetters(uppercaseLetters)
     rawDecrypt(input: string, key: string){
@@ -243,4 +250,4 @@ export class vigenere extends Cipher<string>{
     rawEncrypt(input: string, key: string){
         return letterCodeMap(input, (letter, n) => cMod(letter + toLetterCode(key[(n % key.length)]), 26))
     }
-}
+})
