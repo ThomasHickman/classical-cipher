@@ -30,3 +30,18 @@ export function generateUniformArray<type>(elementToRepeat: type, times: number,
     }
     return retValue;
 }
+
+export type Appendable = Array<any> | string;
+
+export function append<T>(arr: T[], element: T): T[];
+export function append(arr: string, element: string): string;
+export function append<T>(arr: T[] | string, element: any){
+    if(typeof arr === "string"){
+        arr += element;
+        return arr;
+    }
+    else if(typeof arr === "object"){
+        arr.push(element);
+        return arr;
+    }
+}

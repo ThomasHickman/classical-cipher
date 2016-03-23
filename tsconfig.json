@@ -10,7 +10,7 @@
         "declaration": false,
         "noImplicitAny": false,
         "removeComments": true,
-        "noLib": false,
+        "noLib": true,
         "preserveConstEnums": true,
         "suppressImplicitAnyIndexErrors": true
     },
@@ -21,19 +21,20 @@
     ],
     "compileOnSave": true,
     "buildOnSave": false,
+    "atom": {
+        "rewriteTsconfig": true
+    },
     "files": [
         "src/Cipher.ts",
         "src/Ciphers/AllCiphers.ts",
         "src/Ciphers/HelperFunctions.ts",
         "src/common.ts",
         "src/index.ts",
-        "src/Keys.ts",
+        "src/keys.ts",
         "test/test.ts",
         "typings/lodash/lodash.d.ts",
         "typings/mocha/mocha.d.ts",
-        "typings/node/node.d.ts"
-    ],
-    "atom": {
-        "rewriteTsconfig": true
-    }
+        "typings/node/node.d.ts",
+        "typings/es6/lib.es6.d.ts"
+    ]
 }
