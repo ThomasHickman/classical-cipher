@@ -1,3 +1,5 @@
+import _ = require("lodash")
+
 export var lowercaseLetters = "abcdefghijklmnopqrstuvwxyz";
 export var uppercaseLetters = lowercaseLetters.toUpperCase();
 
@@ -20,6 +22,13 @@ export class Exception extends Error {
     }
     toString() {
         return this.name + ': ' + this.message;
+    }
+}
+
+export class NotImplementedException extends Exception {
+    name = "NotImplementedException"
+    constructor(){
+        super("Function not implemented")
     }
 }
 

@@ -1,7 +1,7 @@
-import Keys = require("./keys")
+import keys = require("../keys")
 import _ = require("lodash");
 
-interface EncyptionOptions{
+export interface EncyptionOptions{
     formatResult?: boolean
 }
 
@@ -9,7 +9,7 @@ var EncyptionOptionsDefault = {
     formatResult: true
 }
 
-export interface solvedCipherInfo<keyType> {
+interface solvedCipherInfo<keyType> {
     key: keyType;
     solution: string;
 }
@@ -31,19 +31,28 @@ export abstract class Cipher<keyType>{
     }
 
     static format(text: string, original: string){
+        function testInvarient(){
+            if(text[inputNumOn] === undefined){
+                throw new Error(`[Cipher.format] the text "${text}" cannot be matched formatted with
+                    original "${original}"`)
+            }
+        }
         var output = "";
         var inputNumOn = 0;
         for (var i = 0; i < original.length; i++) {
             var charCode = original[i].charCodeAt(0);
             if (charCode >= 97 /*a*/ && charCode <= 122 /*z*/) {
+                testInvarient()
                 output += text[inputNumOn++].toLowerCase();
             }
             else if (charCode >= 65 /*A*/ && charCode <= 90 /*Z*/) {
+                testInvarient()
                 output += text[inputNumOn++].toUpperCase();
             }
             else {
                 output += original[i];
             }
+
         }
         return output;
     }
@@ -65,10 +74,10 @@ export abstract class Cipher<keyType>{
         return options.formatResult? Cipher.format(decryptedText, input) : decryptedText;
     }
     encrypt (input: string, key: any, options: EncyptionOptions = {}){
-        return this.formattedCipherOperation(input, key, options, this.rawEncrypt);
+        return this.formattedCipherOperation(input, key, options, this.rawEncrypt.bind(this));
     }
     decrypt (input: string, key: any, options: EncyptionOptions = {}){
-        return this.formattedCipherOperation(input, key, options, this.rawDecrypt);
+        return this.formattedCipherOperation(input, key, options, this.rawDecrypt.bind(this));
     }
     nonFormatting: {
         encrypt: (input: string, key: keyType) => string;
@@ -79,5 +88,7 @@ export abstract class Cipher<keyType>{
     solve(x: void){
         return Error("Not implemented yet");
     };
-    keyInfo: Keys.KeyType<keyType>;
+    keyInfo: keys.Key<keyType>;
 }
+
+export default Cipher

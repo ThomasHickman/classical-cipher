@@ -1,0 +1,56 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "isolatedModules": false,
+        "jsx": "react",
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "declaration": true,
+        "noImplicitAny": false,
+        "noImplicitUseStrict": false,
+        "removeComments": true,
+        "noLib": true,
+        "sourceMap": true,
+        "preserveConstEnums": true,
+        "suppressImplicitAnyIndexErrors": true,
+        "outDir": "../dist"
+    },
+    "filesGlob": [
+        "**/*.ts",
+        "**/*.tsx",
+        "../typings/**/*.ts"
+    ],
+    "compileOnSave": true,
+    "buildOnSave": false,
+    "atom": {
+        "rewriteTsconfig": true
+    },
+    "files": [
+        "ciphers.ts",
+        "Ciphers/Amsco.ts",
+        "Ciphers/CaesarShift.ts",
+        "Ciphers/Cipher.ts",
+        "Ciphers/ColumnTransposition.ts",
+        "Ciphers/HelperFunctions.ts",
+        "Ciphers/HillCipher.ts",
+        "Ciphers/Playfair.ts",
+        "Ciphers/SimpleSubstitution.ts",
+        "Ciphers/Vigenere.ts",
+        "index.ts",
+        "keys.ts",
+        "Keys/Arrangement.ts",
+        "Keys/FixedArrangement.ts",
+        "Keys/Integer.ts",
+        "Keys/InvalidKeyException.ts",
+        "Keys/Key.ts",
+        "Keys/keysUtils.ts",
+        "Keys/NonUniqueArray.ts",
+        "util.ts",
+        "../typings/es6/lib.es6.d.ts",
+        "../typings/lodash/lodash.d.ts",
+        "../typings/mocha/mocha.d.ts",
+        "../typings/node/node.d.ts"
+    ]
+}

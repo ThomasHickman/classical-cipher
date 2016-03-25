@@ -1,3 +1,5 @@
+import _ = require("lodash")
+
 /** Same as letterCodeMap, but the function shoudl take in a letter and output a letter code*/
 export function letterCodeOutputMap(input: string, func: (inp: string, pos: number) => number) {
     var output = "";

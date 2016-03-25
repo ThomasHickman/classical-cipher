@@ -9,18 +9,16 @@
         "emitDecoratorMetadata": true,
         "declaration": false,
         "noImplicitAny": false,
+        "noImplicitUseStrict": false,
         "removeComments": true,
         "noLib": true,
         "preserveConstEnums": true,
-        "suppressImplicitAnyIndexErrors": true,
-        "sourceMap": true,
-        "watch": true,
-        "outFile": "bin/classical-cipher"
+        "suppressImplicitAnyIndexErrors": true
     },
     "filesGlob": [
         "**/*.ts",
         "**/*.tsx",
-        "!node_modules/**"
+        "../typings/**/*.ts"
     ],
     "compileOnSave": true,
     "buildOnSave": false,
@@ -28,16 +26,10 @@
         "rewriteTsconfig": true
     },
     "files": [
-        "src/Cipher.ts",
-        "src/Ciphers/AllCiphers.ts",
-        "src/Ciphers/HelperFunctions.ts",
-        "src/common.ts",
-        "src/index.ts",
-        "src/keys.ts",
-        "test/test.ts",
-        "typings/es6/lib.es6.d.ts",
-        "typings/lodash/lodash.d.ts",
-        "typings/mocha/mocha.d.ts",
-        "typings/node/node.d.ts"
+        "test.ts",
+        "../typings/es6/lib.es6.d.ts",
+        "../typings/lodash/lodash.d.ts",
+        "../typings/mocha/mocha.d.ts",
+        "../typings/node/node.d.ts"
     ]
 }
