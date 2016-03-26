@@ -7,32 +7,33 @@ Tools for decrypting, encrypting, and solving classical ciphers
 
 This project is licensed under the [MIT license (MIT)](LICENSE).
 
-## Ciphers
-### Working ciphers
+## Features
+### Ciphers
+#### Working ciphers
 - Caesar shift
 - Simple substitution cipher
 - Vigenère cipher
 
-### Ciphers to fix
+#### Ciphers to fix
 
 - Amsco cipher
 - Playfair cipher
 - Hill cipher
 - Columnar transposition
 
-### Planned ciphers
+#### Planned ciphers
 
 - Railfence cipher
 - Cadence cipher
 
-## Solvers
-### Planned solvers
+### Solvers
+#### Planned solvers
 - Brute force
 - Hill climbing
 - Simulated Annealing
 
-## Cipher statistics
-### Planned statistics
+### Cipher statistics
+#### Planned statistics
 - Chi squared
 - Quadram count
 - Bigram rate
