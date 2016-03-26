@@ -13,13 +13,13 @@ This project is licensed under the [MIT license (MIT)](LICENSE).
 - Caesar shift
 - Simple substitution cipher
 - Vigenère cipher
+- Columnar transposition
 
 #### Ciphers to fix
 
 - Amsco cipher
 - Playfair cipher
 - Hill cipher
-- Columnar transposition
 
 #### Planned ciphers
 

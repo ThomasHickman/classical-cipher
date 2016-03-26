@@ -38,15 +38,18 @@ describe("test encrypt", () => {
 })
 
 describe("self-tests:", () => {
+    var testString = "this is a test";
     var notFinishedCiphers = [
         "Playfair"
-    ]
-    var testString = "this is a test";
+    ];
+    var randomParameters = {
+        "ColumnTransposition": [cc.ciphers.Cipher.unformat(testString).length * _.random(1, 10)]
+    }
     cc.ciphers.Cipher.allCiphers.forEach(cipher => {
         describe(cipher.name, () => {
             var testingFunc = _.includes(notFinishedCiphers, cipher.name)? xit : it
             testingFunc("decryption of encryption should be a no-op", () => {
-                var randomKey = cipher.keyInfo.generateRandom();
+                var randomKey = cipher.keyInfo.generateRandom.call(cipher.keyInfo, randomParameters[cipher.name]);
                 assert.equal(cipher.decrypt(
                     cipher.encrypt(testString, randomKey), randomKey), testString);
             });
