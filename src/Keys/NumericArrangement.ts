@@ -11,7 +11,7 @@ import _ = require("lodash")
 
 class NumericArrangement extends Arrangement<number> implements Key<number[]>{
     constructor(){
-        super(keyLength => _.range(0, keyLength - 1));
+        super(keyLength => _.range(0, keyLength));
     }
 
     getPrimitiveKey(key: any){

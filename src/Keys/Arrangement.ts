@@ -21,7 +21,7 @@ class Arrangement<type> implements Key<type[]>{
         if(!testKeyType(key, "array") && _.uniq(key).length !== key.length){
             throw new InvalidKeyException(key, "is not array with unique elements");
         }
-        else if (_.isEmpty(_.difference(key, this.getAlphabet(key.length)))){
+        else if (!_.isEmpty(_.difference(key, this.getAlphabet(key.length)))){
             throw new InvalidKeyException(key)
         }
         else{

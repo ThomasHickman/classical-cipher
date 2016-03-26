@@ -14,10 +14,10 @@ This project is licensed under the [MIT license (MIT)](LICENSE).
 - Simple substitution cipher
 - Vigenère cipher
 - Columnar transposition
+- Amsco cipher
 
 #### Ciphers to fix
 
-- Amsco cipher
 - Playfair cipher
 - Hill cipher
 

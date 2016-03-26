@@ -38,12 +38,12 @@ describe("test encrypt", () => {
 })
 
 describe("self-tests:", () => {
-    var testString = "this is a test";
+    var testString = "test string";
     var notFinishedCiphers = [
         "Playfair"
     ];
     var randomParameters = {
-        "ColumnTransposition": [cc.ciphers.Cipher.unformat(testString).length * _.random(1, 10)]
+        "ColumnTransposition": [5/*change is the test string changes*/]
     }
     cc.ciphers.Cipher.allCiphers.forEach(cipher => {
         describe(cipher.name, () => {
