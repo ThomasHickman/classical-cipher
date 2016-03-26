@@ -3,6 +3,10 @@ Tools for decrypting, encrypting, and solving classical ciphers
 
 **This is currently in development**
 
+## Licence
+
+This project is licensed under the [MIT license (MIT)](LICENSE).
+
 ## Ciphers
 ### Working ciphers
 - Caesar shift
