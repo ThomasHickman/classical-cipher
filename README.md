@@ -1,5 +1,5 @@
 # classical-cipher
-Tools for decrypting, encrypting, and solving classical ciphers in javascript
+Tools for decrypting, encrypting, and solving classical ciphers in TypeScript (compiled into JavaScript)
 
 **This is currently in development**
 
