@@ -9,6 +9,28 @@ export function letterCodeOutputMap(input: string, func: (inp: string, pos: numb
     return output;
 }
 
+/** Slice a function at intervals specifed by pattern
+  * >>> divideBy("TESTSTRING", [1, 3, 4])
+  * ["T", "EST", "STRI", "NG"]
+  */
+export function divideBy(str: string, pattern: number[]){
+    var previousSlicePosition = 0;
+    var nextSlicePosition: number;
+
+    var slices = pattern.map(nextSliceLength => {
+        nextSlicePosition = previousSlicePosition + nextSliceLength;
+        var slice = str.slice(previousSlicePosition, nextSlicePosition);
+        previousSlicePosition = nextSlicePosition;
+        return slice;
+    })
+
+    if(nextSlicePosition != str.length - 1){
+        slices.push(str.slice(nextSlicePosition))
+    }
+
+    return slices;
+}
+
 /** Same as letterCodeMap, but the function should take in a letter code and output a letter*/
 export function letterCodeInputMap(input: string, func: (inp: number, pos: number) => string) {
     var output = "";
@@ -45,10 +67,8 @@ export function cMod(num: number, base: number) {
  * >>> undoPermutation([7, 1, 5], [3, 1, 2])
  * [1, 5, 7]
  */
-export function undoPermutation<type>(arrToReArrange: type[], order: number[]) {
-    var retValue = <[type, number][]>arrToReArrange.map((el, i) => [el, order[i]]);
-    retValue.sort((a, b) => a[1] - b[1]);
-    return retValue.map((el) => el[0]);
+export function undoPermutation<type>(arr: type[], permutation: number[]) {
+    return <type[]>_.sortBy(_.zip<type| number>(arr, permutation), 1).map(x => x[0])
 }
 
 /**Resorts an array according to a given permutation
@@ -56,9 +76,8 @@ export function undoPermutation<type>(arrToReArrange: type[], order: number[]) {
  * [7, 1, 5]
  */
 export function applyPermutation<type>(arr: type[], permutation: number[]) {
-    var retValue: type[] = new Array(permutation.length);
-    permutation.forEach((el, i) => retValue[i] = arr[el - 1]);
-    return retValue;
+    var minElement = _.min(permutation);
+    return permutation.map(num => arr[num - minElement])
 }
 
 export function transpose<type>(arr: type[]){

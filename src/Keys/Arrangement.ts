@@ -26,7 +26,7 @@ class Arrangement<type> implements Key<type[]>{
         }
     }
 
-    generateRandom(keyLength: number = _.random(1, 10)) {
+    generateRandom(keyLength: number = 5/*_.random(1, 10)*/) {
         return _.shuffle(this.getAlphabet(keyLength))
     }
 
