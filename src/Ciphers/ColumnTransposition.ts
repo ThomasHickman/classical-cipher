@@ -1,7 +1,7 @@
 import {Cipher} from "./Cipher"
 import keys = require("../keys");
 import {
-
+    inversePermutation
 } from "./HelperFunctions"
 
 import {
@@ -12,28 +12,27 @@ import _ = require("lodash")
 
 class ColumnarTransposition extends Cipher<number[]>{
     name = "Columnar Transposition";
-    keyInfo = new keys.FixedArrangement(_.range(1, 10))
+    keyInfo = new keys.NumericArrangement();
     rawEncrypt(input: string, key: number[]) {
+        var paddedText = input;
         if (input.length % key.length != 0) {
-            var inputLen = input.length;
-            for (var i = 0; i < key.length - (inputLen % key.length); i++) {
-                input += "x";
+            for (var i = 0; i < key.length - (input.length % key.length); i++) {
+                paddedText += "X";
             }
         }
-        var coloums = <Array<string>>[];
-        key.forEach((el) => {
-            coloums[el] = "";
-            for (var o = el; o < input.length; o += key.length) {
-                coloums[el] += input[o];
+        return inversePermutation(key).map(num => {
+            var column = "";
+            for (var i = num; i < paddedText.length; i += key.length) {
+                column += paddedText[i];
             }
-        });
-        return coloums.join("");
+            return column
+        }).join("")
     }
     rawDecrypt(input: string, key: number[]) {
         if (input.length % key.length != 0) {
             var inputLen = input.length;
             for (var i = 0; i < key.length - (inputLen % key.length); i++) {
-                input += "x";
+                input += "X";
             }
         }
         var newGridLength = input.length / key.length;

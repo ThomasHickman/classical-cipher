@@ -4,7 +4,8 @@ import {
     transpose,
     undoPermutation,
     applyPermutation,
-    divideBy
+    divideBy,
+    inversePermutation
 } from "./HelperFunctions"
 
 import {
@@ -15,7 +16,7 @@ import _ = require("lodash")
 
 class Amsco extends Cipher<number[]>{
     name = "Amsco";
-    keyInfo = new keys.Arrangement(keyLength => _.range(0, keyLength - 1));
+    keyInfo = new keys.NumericArrangement();
     private getAmscoBoxes(str: string, startOdd: boolean){
         if(startOdd){
             return [str[0]].concat(this.getAmscoBoxes(str.slice(1), false))
@@ -39,10 +40,10 @@ class Amsco extends Cipher<number[]>{
 
     private getAmscoColumnsFromCiphertext(input: string, key: number[]){
         var columnLengthsByCiphertextOrder = this.findAmscoColumnLengths(input.length, key.length);
-        var reverseKey = undoPermutation(_.range(0, key.length), key)
+        var inverseKey = inversePermutation(key)
         var columnLengthsByPlaintextOrder = undoPermutation(columnLengthsByCiphertextOrder, key)
         var nonBoxedColumns = divideBy(input, columnLengthsByPlaintextOrder)
-        return nonBoxedColumns.map((x, i) => this.getAmscoBoxes(x, reverseKey[i] % 2 == 1));
+        return nonBoxedColumns.map((x, i) => this.getAmscoBoxes(x, inverseKey[i] % 2 == 1));
     }
 
     private findAmscoColumnLengths(inputLength: number, keyLength: number) {

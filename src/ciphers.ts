@@ -15,3 +15,5 @@ export var hillCipher = new HillCipher();
 export var playfair = new Playfair();
 export var simpleSubstitution = new SimpleSubstitution();
 export var vigenere = new Vigenere();
+
+export import HelperFunctions = require("./Ciphers/HelperFunctions")

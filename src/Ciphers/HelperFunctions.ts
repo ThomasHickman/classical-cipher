@@ -71,6 +71,10 @@ export function undoPermutation<type>(arr: type[], permutation: number[]) {
     return <type[]>_.sortBy(_.zip<type| number>(arr, permutation), 1).map(x => x[0])
 }
 
+export function inversePermutation(permutation: number[]){
+    return undoPermutation(_.range(0, permutation.length), permutation);
+}
+
 /**Resorts an array according to a given permutation
  * >>> applyPermutation([1, 5, 7], [3, 1, 2])
  * [7, 1, 5]

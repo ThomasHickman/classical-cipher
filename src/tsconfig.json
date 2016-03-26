@@ -47,6 +47,7 @@
         "Keys/Key.ts",
         "Keys/keysUtils.ts",
         "Keys/NonUniqueArray.ts",
+        "Keys/NumericArrangement.ts",
         "util.ts",
         "../typings/es6/lib.es6.d.ts",
         "../typings/lodash/lodash.d.ts",

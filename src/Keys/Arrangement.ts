@@ -18,11 +18,14 @@ class Arrangement<type> implements Key<type[]>{
     }
 
     getPrimitiveKey(key: any){
-        if(_.uniq(key).length == key.length && typeof key === "object"){
-            return key;
+        if(!testKeyType(key, "array") && _.uniq(key).length !== key.length){
+            throw new InvalidKeyException(key, "is not array with unique elements");
+        }
+        else if (_.isEmpty(_.difference(key, this.getAlphabet(key.length)))){
+            throw new InvalidKeyException(key)
         }
         else{
-            throw new InvalidKeyException(key);
+            return key;
         }
     }
 

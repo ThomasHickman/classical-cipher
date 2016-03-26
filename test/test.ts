@@ -27,6 +27,14 @@ describe("test encrypt", () => {
             cc.ciphers.amsco.encrypt("RIDERSONTHESTORMINTOTHISHOUSEWEAREBORNJIMMORRISON", [7,4,5,6,3,2,1]),
             "HETEAMTTOWIMONNSEJNDTOSEBRERRHOOISSMIURNORISHIROR")
     })
+    it("columnar transposition", () => {
+        assert.equal(
+            cc.ciphers.columnTransposition.encrypt("WE ARE DISCOVERED. FLEE AT ONCE",
+            [6,3,2,4,1,5],
+            {formatResult: false}
+        ), "EVLNXACDTXESEAXROFOXDEECXWIREE");
+        //https://en.wikipedia.org/wiki/Transposition_cipher#Columnar_transposition, using Xs
+    })
 })
 
 describe("self-tests:", () => {

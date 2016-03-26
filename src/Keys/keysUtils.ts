@@ -1,4 +1,5 @@
 import InvalidKeyException from "./InvalidKeyException"
+import _ = require("lodash");
 
 export function nextPermutation<t>(array: t[]) {
     // Find non-increasing suffix
@@ -28,16 +29,27 @@ export function nextPermutation<t>(array: t[]) {
     return array;
 }
 
-export function testKeyType(key: any, expectedType: "number" | "string" | "object" | "array" | Function){
+export function testKeyType(key: any, expectedType: "number"): key is number;
+export function testKeyType(key: any, expectedType: "string"): key is string;
+export function testKeyType(key: any, expectedType: "object"): key is Object;
+export function testKeyType(key: any, expectedType: "array"): key is any[];
+export function testKeyType<T>(key: any, expectedType: T): key is T;
+export function testKeyType<T extends Function>(key: any, expectedType: "number" | "string" | "object" | "array" | T){
     if(expectedType == "array"){
-        if(_.isArray(key)){
+        if(!_.isArray(key)){
             throw new InvalidKeyException(key, "is not an array")
         }
     }
     else if(typeof expectedType === "object"){
-        if(key instanceof expectedType){
-
+        if(!(key instanceof expectedType)){
+            throw new InvalidKeyException(key, "is not an instance of" + expectedType.toString())
         }
+    }
+    else if(typeof key !== expectedType){
+        throw new InvalidKeyException(key, "is not of type " + expectedType)
+    }
+    else{
+        return true;
     }
 }
 
@@ -49,7 +61,7 @@ export function testNumericArrangementOfNumbers(key: number[] | string){
         return key.split("").map(digitStr => {
             var digit = parseInt(digitStr);
             if(isNaN(digit)){
-                throw new InvalidKeyException(key);
+                throw new InvalidKeyException(key, `has an invalid digit "${digit}"`);
             }
             return digit;
         })
