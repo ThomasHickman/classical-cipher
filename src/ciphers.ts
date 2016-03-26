@@ -16,4 +16,4 @@ export var playfair = new Playfair();
 export var simpleSubstitution = new SimpleSubstitution();
 export var vigenere = new Vigenere();
 
-export import HelperFunctions = require("./Ciphers/HelperFunctions")
+export import cipherUtil = require("./Ciphers/cipherUtil")

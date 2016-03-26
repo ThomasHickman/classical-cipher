@@ -2,7 +2,7 @@ import {Cipher} from "./Cipher"
 import keys = require("../keys");
 import {
     cMod
-} from "./HelperFunctions"
+} from "./cipherUtil"
 
 import {
     toLetterCode,

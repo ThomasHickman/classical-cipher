@@ -3,7 +3,7 @@ import keys = require("../keys");
 import {
     letterCodeMap,
     cMod
-} from "./HelperFunctions"
+} from "./cipherUtil"
 
 import {
     uppercaseLetters,

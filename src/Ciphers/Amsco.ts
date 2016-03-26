@@ -6,7 +6,7 @@ import {
     applyPermutation,
     divideBy,
     inversePermutation
-} from "./HelperFunctions"
+} from "./cipherUtil"
 
 import {
     generateUniformArray

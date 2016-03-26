@@ -2,7 +2,7 @@ import {Cipher} from "./Cipher"
 import keys = require("../keys");
 import {
 
-} from "./HelperFunctions"
+} from "./cipherUtil"
 
 import {
     NotImplementedException

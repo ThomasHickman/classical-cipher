@@ -2,7 +2,7 @@ import {Cipher} from "./Cipher"
 import keys = require("../keys");
 import {
     inversePermutation
-} from "./HelperFunctions"
+} from "./cipherUtil"
 
 import {
 
