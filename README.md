@@ -1,31 +1,34 @@
 # classical-cipher
 Tools for decrypting, encrypting, and solving classical ciphers
 
-**This is currently being developed**
+**This is currently in development**
 
-## ciphers
-### working ciphers
+## Ciphers
+### Working ciphers
 - Caesar shift
 - Simple substitution cipher
 - Vigenère cipher
-### ciphers to fix
+
+### Ciphers to fix
+
 - Amsco cipher
 - Playfair cipher
 - Hill cipher
 - Columnar transposition
-### ciphers planned
+
+### Planned ciphers
+
 - Railfence cipher
 - Cadence cipher
 
-
-## solvers
-### planned solvers
+## Solvers
+### Planned solvers
 - Brute force
 - Hill climbing
 - Simulated Annealing
 
 ## Cipher statistics
-### planned statistics
+### Planned statistics
 - Chi squared
 - Quadram count
 - Bigram rate
