@@ -8,7 +8,7 @@ import {generateUniformArray} from "../util"
 import InvalidKeyException from "./InvalidKeyException"
 import Key = require("./Key")
 
-class NonUniqueArray<type> implements Key<type[]> {
+class NonUniqueFixedLengthArray<type> implements Key<type[]> {
     constructor(protected alphabet: type[], protected keyLength: number){}
 
     get range(){
@@ -54,4 +54,4 @@ class NonUniqueArray<type> implements Key<type[]> {
     }
 }
 
-export = NonUniqueArray;
+export = NonUniqueFixedLengthArray;
