@@ -2,7 +2,9 @@ import _ = require("lodash")
 import {
     testKeyType,
     testNumericArrangementOfNumbers,
-    nextPermutation
+    nextPermutation,
+    testUniqueArray,
+    processKeyGeneratingValue
 } from "./keysUtils"
 import InvalidKeyException from "./InvalidKeyException"
 
@@ -18,11 +20,10 @@ class Arrangement<type> implements Key<type[]>{
     }
 
     getPrimitiveKey(key: any){
-        if(!testKeyType(key, "array") && _.uniq(key).length !== key.length){
-            throw new InvalidKeyException(key, "is not array with unique elements");
-        }
-        var diff = _.difference(key, this.getAlphabet(key.length))
+        testKeyType(key, "array");
+        testUniqueArray(key);
 
+        var diff = _.difference(key, this.getAlphabet(key.length))
         if (!_.isEmpty(diff)){
             throw new InvalidKeyException(key, `${diff} ${diff.length == 1?"is":"are"} not in the alphabet`, true)
         }
@@ -42,12 +43,7 @@ class Arrangement<type> implements Key<type[]>{
     private getAlphabet: (keyLength: number) => type[];
 
     constructor(alphabet: type[] | ((keyLength: number) => type[])){
-        if(typeof alphabet !== "function"){
-            this.getAlphabet = _ => <type[]>alphabet
-        }
-        else{
-            this.getAlphabet = <((keyLength: number) => type[])>alphabet
-        }
+        this.getAlphabet = processKeyGeneratingValue(alphabet)
     }
 }
 

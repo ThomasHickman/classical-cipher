@@ -53,6 +53,21 @@ export function testKeyType<T extends Function>(key: any, expectedType: "number"
     }
 }
 
+export function testUniqueArray(key: any[]){
+    if(_.uniq(key).length !== key.length){
+        throw new InvalidKeyException(key, "is not array with unique elements");
+    }
+}
+
+export function processKeyGeneratingValue<T>(value: T | ((keyLength: number) => T)): (keyLength: number) => T{
+    if(typeof value !== "function"){
+        return _ => <T>value
+    }
+    else{
+        return <((keyLength: number) => T)>value
+    }
+}
+
 export function testNumericArrangementOfNumbers(key: number[] | string){
     if(_.isArray(key) && key.every(el => typeof el == "number")){
         return key;
