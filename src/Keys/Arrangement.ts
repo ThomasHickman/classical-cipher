@@ -21,8 +21,10 @@ class Arrangement<type> implements Key<type[]>{
         if(!testKeyType(key, "array") && _.uniq(key).length !== key.length){
             throw new InvalidKeyException(key, "is not array with unique elements");
         }
-        else if (!_.isEmpty(_.difference(key, this.getAlphabet(key.length)))){
-            throw new InvalidKeyException(key)
+        var diff = _.difference(key, this.getAlphabet(key.length))
+
+        if (!_.isEmpty(diff)){
+            throw new InvalidKeyException(key, `${diff} ${diff.length == 1?"is":"are"} not in the alphabet`, true)
         }
         else{
             return key;
