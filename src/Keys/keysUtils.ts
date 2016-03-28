@@ -1,6 +1,11 @@
 import InvalidKeyException from "./InvalidKeyException"
 import _ = require("lodash");
 
+/*
+ * Next lexicographical permutation algorithm (JavaScript)
+ * by Project Nayuki, 2014. Public domain.
+ * https://www.nayuki.io/page/next-lexicographical-permutation-algorithm
+ */
 export function nextPermutation<t>(array: t[]) {
     // Find non-increasing suffix
     var i = array.length - 1;
