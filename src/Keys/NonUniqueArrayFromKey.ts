@@ -51,3 +51,5 @@ class NonUniqueArrayFromKey<type> implements Key<type[]>{
         return [this.getKey(1).startGeneration()];
     }
 }
+
+export = NonUniqueArrayFromKey

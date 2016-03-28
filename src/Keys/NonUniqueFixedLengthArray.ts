@@ -48,7 +48,7 @@ class NonUniqueFixedLengthArray<type> implements Key<type[]> {
     generateRandom() {
         var rndStr = [];
         for (var i = 0; i < this.keyLength; i++) {
-            rndStr.push(this.alphabet[_.random(this.alphabet.length)]);
+            rndStr.push(this.alphabet[_.random(this.alphabet.length - 1)]);
         }
         return rndStr;
     }
