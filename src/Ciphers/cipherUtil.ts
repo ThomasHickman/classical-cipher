@@ -87,3 +87,37 @@ export function applyPermutation<type>(arr: type[], permutation: number[]) {
 export function transpose<type>(arr: type[]){
     return <type[]>_.zip.apply(_, arr)
 }
+
+/** A bijection from N^n -> N (N is the set of natural numbers)
+  * uses cantorPairing*/
+export function cantorTuple(tuple: number[]){
+    if (tuple.length == 1){
+        return tuple[0]
+    }
+    return cantorPairing(cantorTuple(_.tail(tuple)), _.head(tuple))
+}
+
+/** A bijection from N -> N^2 (N is the set of natural numbers)
+  * uses cantorPairing*/
+export function inverseCantorTuple(num: number, n: number){
+    if(n == 1){
+        return [num];
+    }
+    var pair = inverseCantorPairing(num);
+    return [pair[0]].concat(inverseCantorTuple(pair[1], n - 1))
+}
+
+//from https://en.wikipedia.org/wiki/Pairing_function#Cantor_pairing_function
+export function inverseCantorPairing(n: number){
+    if(n < 0)
+        return null;
+    var w = Math.floor((Math.sqrt(8 * n + 1) - 1) / 2)
+    var t = (w * w + w) / 2
+    var y = n - t;
+    var x = w - y;
+    return [x, y];
+}
+
+export function cantorPairing(n1: number, n2: number){
+    return 1/2 * (n1 + n2) * (n1 + n2 + 1) + n2
+}
