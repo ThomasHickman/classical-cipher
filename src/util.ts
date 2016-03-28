@@ -54,3 +54,7 @@ export function append<T>(arr: T[] | string, element: any){
         return arr;
     }
 }
+
+export function _throw(value: any){
+    throw value
+}
