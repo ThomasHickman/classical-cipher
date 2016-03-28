@@ -35,6 +35,11 @@ describe("test encrypt", () => {
         ), "EVLNXACDTXESEAXROFOXDEECXWIREE");
         //https://en.wikipedia.org/wiki/Transposition_cipher#Columnar_transposition, using Xs
     })
+    it("hill cipher", () => {
+        assert.equal(
+            cc.ciphers.hillCipher.encrypt("HELP", [3, 3, 2, 5]),
+            "HIAT")
+        })
 })
 
 describe("self-tests:", () => {
