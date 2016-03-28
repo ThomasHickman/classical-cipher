@@ -24,7 +24,7 @@ class Integer implements Key<number>{
             potentialValue = inputKey;
         }
 
-        if(potentialValue > this.min && potentialValue < this.max){
+        if(potentialValue >= this.min && potentialValue <= this.max){
             return potentialValue;
         }
         else{
