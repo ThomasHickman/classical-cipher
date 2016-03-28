@@ -40,6 +40,11 @@ describe("test encrypt", () => {
             cc.ciphers.hillCipher.encrypt("HELP", [3, 3, 2, 5]),
             "HIAT")
         })
+    it("rail fence", () => {
+        assert.equal(
+            cc.ciphers.railFence.encrypt("WE ARE DISCOVERED. FLEE AT ONCE", 3, {formatResult: false}),
+            "WECRLTEERDSOEEFEAOCAIVDEN")
+        })
 })
 
 describe("self-tests:", () => {

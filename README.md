@@ -20,10 +20,10 @@ This project is licensed under the [MIT license (MIT)](LICENSE).
 
 - Playfair cipher
 - Hill cipher
+- Railfence cipher
 
 #### Planned ciphers
 
-- Railfence cipher
 - Cadence cipher
 
 ### Solvers

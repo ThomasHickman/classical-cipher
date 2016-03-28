@@ -33,7 +33,10 @@ class Integer implements Key<number>{
     }
 
     generateRandom(){
-        return _.random(this.min, this.max)
+        var rndMin = this.min == -Infinity?-10:this.min;
+        var rndMax = this.max == Infinity?10:this.max;
+
+        return _.random(rndMin, rndMax);
     }
 
     get range(){

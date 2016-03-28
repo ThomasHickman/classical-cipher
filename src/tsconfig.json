@@ -36,6 +36,7 @@
         "Ciphers/ColumnTransposition.ts",
         "Ciphers/HillCipher.ts",
         "Ciphers/Playfair.ts",
+        "Ciphers/RailFence.ts",
         "Ciphers/SimpleSubstitution.ts",
         "Ciphers/Vigenere.ts",
         "index.ts",
