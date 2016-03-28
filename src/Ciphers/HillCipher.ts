@@ -1,12 +1,15 @@
 import {Cipher} from "./Cipher"
 import keys = require("../keys");
 import {
-    cMod
+    cMod,
+    inverseCantorTuple,
+    cantorTuple
 } from "./cipherUtil"
 
 import {
     toLetterCode,
-    fromLetterCode
+    fromLetterCode,
+    _throw
 } from "./../util"
 
 import _ = require("lodash")
@@ -14,8 +17,16 @@ import _ = require("lodash")
 var hillCiphersInverses = [NaN, 1, NaN, 9, NaN, 21, NaN, 15, NaN, 3, NaN, 19, NaN, NaN, NaN, 7, NaN, 23, NaN, 11, NaN, 5, NaN, 17, NaN, 25];
 
 class HillCipher extends Cipher<number[]>{
-    name = "Hill Cipher";
-    keyInfo = new keys.FixedArrangement(_.range(0, 25));
+    name = "Hill Cipher"
+    keyInfo = new keys.NonUniqueFixedLengthArray(_.range(0, 25), 4);/*new keys.MappedKey<number[]>(
+        new keys.Arrangement(keyLength => _.range(0, Math.pow(25, keyLength))),
+        oldKey =>  _.flatten(oldKey.map(element => inverseCantorTuple(element, oldKey.length))),
+        newKey =>  {
+            var matrixSize = Math.sqrt(newKey.length);
+            if(!_.isInteger(matrixSize)) return null;
+            return _.chunk(newKey, matrixSize).map(row => cantorTuple(row))
+        }
+    )*/
     rawEncrypt(input: string, key: number[]) {
         var retValue = "";
         var matrixDimentions = Math.sqrt(key.length);
