@@ -1,7 +1,7 @@
 # classical-cipher
 Tools for decrypting, encrypting, and solving classical ciphers in JavaScript
 
-**This is currently in development**
+**This project is currently in development**
 
 ## Licence
 
