@@ -4,4 +4,4 @@ import ChiSquared = require("./Stats/ChiSquared");
 
 export var chiSquared = new ChiSquared();
 
-export import statUtil = require("./Ciphers/cipherUtil")
+export import statUtil = require("./Stats/statUtil")
