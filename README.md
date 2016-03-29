@@ -15,11 +15,11 @@ This project is licensed under the [MIT license (MIT)](LICENSE).
 - Vigenère cipher
 - Columnar transposition
 - Amsco cipher
+- Hill cipher
 
 #### Ciphers to fix
 
 - Playfair cipher
-- Hill cipher
 - Railfence cipher
 
 #### Planned ciphers
@@ -33,7 +33,10 @@ This project is licensed under the [MIT license (MIT)](LICENSE).
 - Simulated Annealing
 
 ### Cipher statistics
+#### Working ciphers
+- Chi Squared
+
 #### Planned statistics
-- Chi squared
+
 - Quadram count
 - Bigram rate

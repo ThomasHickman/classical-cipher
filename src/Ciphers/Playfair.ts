@@ -35,7 +35,6 @@ class Playfair extends Cipher<string[]>{
             }
             return [Math.floor((pos / size) + 1), (pos % size) + 1];
         }
-        //square = removespaces(square.toUpperCase());
         if (size == undefined)
             size = 5;
         var invaidlettergot = false;
@@ -70,7 +69,7 @@ class Playfair extends Cipher<string[]>{
                     finalst += getSquareLetter(sqposb[0], sqposb[1] - 1);
                 }
             } else if (sqposa[1] == sqposb[1]) {
-                // Same collom
+                // Same column
                 // Get letter across
                 // 1st
                 if (sqposa[0] == 1) {
