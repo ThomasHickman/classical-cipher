@@ -6,19 +6,57 @@ import {
     cantorTuple
 } from "./cipherUtil"
 
+import Key = require("../Keys/Key")
+
 import {
     toLetterCode,
     fromLetterCode,
-    _throw
+    _throw,
+    NotImplementedException
 } from "./../util"
+
+import InvalidKeyException from "./../Keys/InvalidKeyException"
 
 import _ = require("lodash")
 
 var hillCiphersInverses = [NaN, 1, NaN, 9, NaN, 21, NaN, 15, NaN, 3, NaN, 19, NaN, NaN, NaN, 7, NaN, 23, NaN, 11, NaN, 5, NaN, 17, NaN, 25];
 
+function isValidKey(key: number[]){
+    var det = cMod(key[0] * key[3] - key[1] * key[2], 26);
+    var inverseDet = hillCiphersInverses[det];
+    if (isNaN(inverseDet))
+        return false;
+    return true;
+}
+
+class HillCipherKey extends keys.NonUniqueFixedLengthArray<number>{
+    getPrimitiveKey(key: any){
+        var potentialKey = super.getPrimitiveKey(key);
+        if(!isValidKey(potentialKey)) throw new InvalidKeyException(key, "is not invertable");
+        return potentialKey;
+    }
+
+    generateRandom(){
+        while(true){
+            var potentialKey = super.generateRandom();
+            if(isValidKey(potentialKey)){
+                return potentialKey;
+            }
+        }
+    }
+
+    generateOrdered(prev: number[]): number[]{
+        throw new NotImplementedException();
+    }
+
+    constructor(){
+        super(_.range(0, 25), 4)
+    }
+}
+
 class HillCipher extends Cipher<number[]>{
     name = "Hill Cipher"
-    keyInfo = new keys.NonUniqueFixedLengthArray(_.range(0, 25), 4);/*new keys.MappedKey<number[]>(
+    keyInfo = <Key<number[]>>(new HillCipherKey())/*new keys.MappedKey<number[]>(
         new keys.Arrangement(keyLength => _.range(0, Math.pow(25, keyLength))),
         oldKey =>  _.flatten(oldKey.map(element => inverseCantorTuple(element, oldKey.length))),
         newKey =>  {
