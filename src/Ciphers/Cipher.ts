@@ -1,6 +1,11 @@
 import keys = require("../keys")
 import _ = require("lodash");
 
+import {
+    format,
+    unformat
+} from "../util"
+
 export interface EncyptionOptions{
     formatResult?: boolean
 }
@@ -16,46 +21,6 @@ interface solvedCipherInfo<keyType> {
 
 export abstract class Cipher<keyType>{
     static allCiphers = <Cipher<any>[]>[];
-    static unformat(text: string){
-        var output = "";
-        for (var i = 0; i < text.length; i++) {
-            var charCode = text[i].charCodeAt(0);
-            if (charCode >= 97 /*a*/ && charCode <= 122 /*z*/) {
-                output += String.fromCharCode(charCode - 32);
-            }
-            else if (charCode >= 65 /*A*/ && charCode <= 90 /*Z*/) {
-                output += text[i];
-            }
-        }
-        return output;
-    }
-
-    static format(text: string, original: string){
-        function testInvarient(){
-            if(text[inputNumOn] === undefined){
-                throw new Error(`[Cipher.format] the text "${text}" cannot be matched formatted with
-                    original "${original}"`)
-            }
-        }
-        var output = "";
-        var inputNumOn = 0;
-        for (var i = 0; i < original.length; i++) {
-            var charCode = original[i].charCodeAt(0);
-            if (charCode >= 97 /*a*/ && charCode <= 122 /*z*/) {
-                testInvarient()
-                output += text[inputNumOn++].toLowerCase();
-            }
-            else if (charCode >= 65 /*A*/ && charCode <= 90 /*Z*/) {
-                testInvarient()
-                output += text[inputNumOn++].toUpperCase();
-            }
-            else {
-                output += original[i];
-            }
-
-        }
-        return output;
-    }
 
     constructor() {
         Cipher.allCiphers.push(this);
@@ -70,8 +35,8 @@ export abstract class Cipher<keyType>{
                                     options: EncyptionOptions,
                                     operation: (input: string, key: keyType) => string){
         _.defaults(options, EncyptionOptionsDefault) // Modifies options
-        var decryptedText = operation(Cipher.unformat(input), this.keyInfo.getPrimitiveKey(key))
-        return options.formatResult? Cipher.format(decryptedText, input) : decryptedText;
+        var decryptedText = operation(unformat(input), this.keyInfo.getPrimitiveKey(key))
+        return options.formatResult? format(decryptedText, input) : decryptedText;
     }
     encrypt (input: string, key: any, options: EncyptionOptions = {}){
         return this.formattedCipherOperation(input, key, options, this.rawEncrypt.bind(this));

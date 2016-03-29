@@ -55,6 +55,47 @@ export function append<T>(arr: T[] | string, element: any){
     }
 }
 
+export function unformat(text: string){
+    var output = "";
+    for (var i = 0; i < text.length; i++) {
+        var charCode = text[i].charCodeAt(0);
+        if (charCode >= 97 /*a*/ && charCode <= 122 /*z*/) {
+            output += String.fromCharCode(charCode - 32);
+        }
+        else if (charCode >= 65 /*A*/ && charCode <= 90 /*Z*/) {
+            output += text[i];
+        }
+    }
+    return output;
+}
+
+export function format(text: string, original: string){
+    function testInvarient(){
+        if(text[inputNumOn] === undefined){
+            throw new Error(`[Cipher.format] the text "${text}" cannot be matched formatted with
+                original "${original}"`)
+        }
+    }
+    var output = "";
+    var inputNumOn = 0;
+    for (var i = 0; i < original.length; i++) {
+        var charCode = original[i].charCodeAt(0);
+        if (charCode >= 97 /*a*/ && charCode <= 122 /*z*/) {
+            testInvarient()
+            output += text[inputNumOn++].toLowerCase();
+        }
+        else if (charCode >= 65 /*A*/ && charCode <= 90 /*Z*/) {
+            testInvarient()
+            output += text[inputNumOn++].toUpperCase();
+        }
+        else {
+            output += original[i];
+        }
+
+    }
+    return output;
+}
+
 export function _throw(value: any){
     throw value
 }
