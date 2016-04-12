@@ -10,7 +10,8 @@ import {
 import Stat = require("./Stat")
 
 class ChiSquared extends Stat{
-    name: "Chi Squared";
+    name = "Chi Squared";
+    significanceLevel = 100;
     rawFindStatistic(text: string) {
         var result = 0;
         text = text.toUpperCase();

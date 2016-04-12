@@ -17,7 +17,7 @@ interface Key<internalKeyType> {
         typeFrom: string;
         convert: (from: any) => internalKeyType
     }[];
-    changeParameters?: Function;
+    //changeParameters?: Function;
     fixedLength?: number;
 }
 

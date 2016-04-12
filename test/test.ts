@@ -2,6 +2,17 @@ import cc = require("../dist/index")
 import assert = require("assert")
 import _ = require("lodash")
 
+describe("solvers", () => {
+    it("solves ceasar shift using brute force", () => {
+        assert(cc.solvers.bruteForce.solve({
+            cipherText: "Alza zaypun!",
+            cipher: cc.ciphers.caesarShift,
+            stat: cc.stats.chiSquared,
+            reporter: cc.reporters.silentReporter
+        }).text, "Test string!")
+    })
+})
+
 describe("abstract ciphers", () => {
     it("formats and unformats strings", () => {
         assert(cc.util.unformat("Test string!"), "TESTSTRING")

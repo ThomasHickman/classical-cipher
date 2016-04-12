@@ -1,5 +1,10 @@
 import keys = require("../keys")
 import _ = require("lodash");
+import Stat = require("../Stats/Stat")
+
+import {
+    Solver
+} from "../Solvers/Solver"
 
 import {
     format,
@@ -19,6 +24,11 @@ interface solvedCipherInfo<keyType> {
     solution: string;
 }
 
+export interface DefaultSolverParameters<T>{
+    stat?: Stat;
+    solver?: Solver<T>;
+}
+
 export abstract class Cipher<keyType>{
     static allCiphers = <Cipher<any>[]>[];
 
@@ -30,6 +40,9 @@ export abstract class Cipher<keyType>{
     abstract rawEncrypt(input: string, key: keyType): string;
     /** Encrypts without checking the key, converting the key or formatting the key*/
     abstract rawDecrypt(input: string, key: keyType): string;
+
+    /***/
+    defaultSolverParameters: DefaultSolverParameters<keyType>;
 
     private formattedCipherOperation(input: string, key: keyType,
                                     options: EncyptionOptions,
@@ -44,10 +57,10 @@ export abstract class Cipher<keyType>{
     decrypt (input: string, key: any, options: EncyptionOptions = {}){
         return this.formattedCipherOperation(input, key, options, this.rawDecrypt.bind(this));
     }
-    nonFormatting: {
+    /*nonFormatting: {
         encrypt: (input: string, key: keyType) => string;
         decrypt: (input: string, key: keyType) => string;
-    }
+    }*/
     recommendedSolveMethod: any;
 
     solve(x: void){
