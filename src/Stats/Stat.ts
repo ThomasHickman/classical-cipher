@@ -2,10 +2,12 @@ import {
     unformat
 } from "../util"
 
-abstract class Stat<type> {
-    static allStats = <Stat<any>[]>[];
-    abstract name: string;
-    abstract rawFindStatistic(cipherText: string): type;
+abstract class Stat {
+    static allStats = <Stat[]>[];
+    name: string;
+    abstract rawFindStatistic(cipherText: string): number;
+    significanceLevel: number;
+    lowerIsBetter = true;
 
     findStatistic(cipherText: string){
         return this.rawFindStatistic(unformat(cipherText));
