@@ -4,6 +4,7 @@
   "description": "Tools for decrypting, encrypting, and solving classical ciphers",
   "main": "src/index.js",
   "scripts": {
+    "build": "tsc -p src && tsc -p test && tsc -p build-tools",
     "test": "mocha -R spec"
   },
   "keywords": [
