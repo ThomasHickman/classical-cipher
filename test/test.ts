@@ -4,8 +4,8 @@ import _ = require("lodash")
 
 describe("abstract ciphers", () => {
     it("formats and unformats strings", () => {
-        assert(cc.ciphers.Cipher.unformat("Test string!"), "TESTSTRING")
-        assert(cc.ciphers.Cipher.format("TSTSSTRNGY", "Test string!"), "Tsts strngy!")
+        assert(cc.util.unformat("Test string!"), "TESTSTRING")
+        assert(cc.util.format("TSTSSTRNGY", "Test string!"), "Tsts strngy!")
     })
 });
 
