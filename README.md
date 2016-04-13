@@ -16,24 +16,24 @@ This project is licensed under the [MIT license (MIT)](LICENSE).
 - Columnar transposition
 - Amsco cipher
 - Hill cipher
+- Railfence cipher
 
 #### Ciphers to fix
 
 - Playfair cipher
-- Railfence cipher
 
 #### Planned ciphers
-
 - Cadence cipher
 
 ### Solvers
-#### Planned solvers
 - Brute force
+
+#### Planned solvers
 - Hill climbing
 - Simulated Annealing
 
 ### Cipher statistics
-#### Working ciphers
+#### Working statistics
 - Chi Squared
 
 #### Planned statistics
