@@ -1,6 +1,16 @@
-import cc = require("../dist/index")
-import assert = require("assert")
-import _ = require("lodash")
+import cc = require("../dist/index");
+import assert = require("assert");
+import _ = require("lodash");
+
+function get_diff_count(text1: string, text2: string){
+    var diff_count = 0;
+    text1.split("").forEach((el, i) => {
+        if(el != text2[i]){
+            diff_count++;
+        }
+    })
+    return diff_count;
+}
 
 describe("solvers", () => {
     it("solves ceasar shift using brute force", () => {
@@ -10,6 +20,19 @@ describe("solvers", () => {
             stat: cc.stats.chiSquared,
             reporter: cc.reporters.silentReporter
         }).text, "Test string!")
+    })
+
+    it("solves transposition using hill climbing", () => {
+        var cipherText = "KLUSUSRKASKWASSRGAXLUPLUSSVYYNSKKNTNIINXKLAMUSKCUHVKUNDNTKLAADGIUSLRIYLRHAK";
+        var key = 'RHPMATGLUOFIWDNYBCSKVQXJEZ';
+        var plainText = "THISISATESTMESSAGEWHICHISSUPPOSTTOFOLLOWTHEDISTRIBUTIONOFTHEENGLISHALPHABET";
+        var result = cc.solvers.hillClimbing.solve({
+            cipherText: cipherText,
+            cipher: cc.ciphers.simpleSubstitution,
+            stat: cc.stats.chiSquared,
+            reporter: cc.reporters.silentReporter
+        });
+        assert(get_diff_count(plainText, result.text) < 10); // Hasn't got more than 10 differences
     })
 })
 
