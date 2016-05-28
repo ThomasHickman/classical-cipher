@@ -10,7 +10,9 @@ import {
 import _ = require("lodash");
 import cc = require("../index");
 
-
+function hill_climbing<T>(init: T, progress: (value: T) => T, weight: (value: T) => number){
+    var curr_value = _.cloneDeep(init);
+}
 
 class HillClimbing<T> extends Solver<T>{
     name = "Hill Climbing";
@@ -18,56 +20,27 @@ class HillClimbing<T> extends Solver<T>{
         _.defaults(args.settings, {
             needToPassBenchmark: true,
             initKey: args.cipher.keyInfo.generateRandom(),
-            outerIterations: 20,
-            iterations: 1000,
-            reducedCipherTextLength: args.cipherText.length
+            iterations: 1000
         });
-        if(args.cipher.keyInfo.smallAlteration == undefined){
-            throw new NotImplementedException("Small alteration function not implemeted!");
+
+        var bestKey = args.settings.initKey;
+        var bestWeight = args.stat.lowerIsBetter?Infinity:-Infinity;
+        for(var tryNum = 0;tryNum < 10000;tryNum++){
+            var currKey = args.cipher.keyInfo.smallAlteration(bestKey);
+            var decryptedText = args.cipher.decrypt(args.cipherText, currKey);
+            var keyWeight = args.stat.findStatistic(decryptedText);
+
+            if(args.stat.lowerIsBetter == keyWeight < bestWeight){
+                bestWeight = keyWeight;
+                bestKey = currKey;
+                args.reporter.log(`Found new key: ${currKey} text ${decryptedText.slice(0, 100)}, of weight ${keyWeight}`);
+            }
         }
 
-        var referenceCipherText = args.cipherText.slice(0, args.settings.reducedCipherTextLength);
-        var key: T;
-        var highestResult;
-        var decrypted: string;
-        var result: number;
-        var iterOn = 0;
-        var newKey: T;
-        var bestIteration = {
-            result: args.stat.lowerIsBetter ? Infinity : -Infinity,
-            key: <T>null,
-        };
-        for (var i = 0; i < args.settings.iterations; i++) {
-            newKey = args.cipher.keyInfo.smallAlteration(key);
-            decrypted = args.cipher.rawDecrypt(referenceCipherText, newKey);
-            result = args.stat.findStatistic(decrypted);
-            if (result < highestResult.result == args.stat.lowerIsBetter) {
-                i = 0;
-                iterOn++;
-                key = _.cloneDeep(newKey);
-                args.reporter.log("Found better key: " + key);
-                args.reporter.log("Text: " + decrypted.slice(0, 100) + "...");
-                highestResult.key = _.cloneDeep(key);
-                highestResult.result = result;
-            }
+        return {
+            text: args.cipher.decrypt(args.cipherText, bestKey),
+            key: bestKey
         }
-        args.reporter.finish(args.cipher.rawDecrypt(args.cipherText, highestResult.key), highestResult.key, highestResult.result);
-        if (!args.settings.needToPassBenchmark && !args.settings.useLowestValue) {
-            bestIteration = highestResult;
-            break;
-        }
-        else if (bestIteration.result > highestResult.result == args.stat.lowerIsBetter) {
-            bestIteration = highestResult;
-            if (args.settings.needToPassBenchmark && (bestIteration.result < args.stat.significanceLevel == args.stat.lowerIsBetter)) {
-                return args.cipher.rawDecrypt(args.cipherText, bestIteration.key);
-            }
-        }
-        key = args.cipher.keyInfo.startRnd();
-        if (settings.needToPassBenchmark) {
-            reporter.error("Cannot get highest result");
-            reporter.finish(cipher.nonFormatting.decrypt(cipherText, bestIteration.key), bestIteration.key, tester.func(cipher.nonFormatting.decrypt(cipherText, bestIteration.key)));
-        }
-        return cipher.nonFormatting.decrypt(cipherText, bestIteration.key);
     }
 }
 

@@ -18,6 +18,21 @@ class FixedArrangement<type> implements Key<type[]>{
         return this.alphabet;
     }
 
+    switchLetters(arr: type[]){
+        var letter1Loc = _.random(0, arr.length - 1);
+        var letter2Loc = _.random(0, arr.length - 1);
+
+        var tmp = arr[letter1Loc];
+        arr[letter1Loc] = arr[letter2Loc];
+        arr[letter2Loc] = tmp;
+
+        return arr;
+    }
+
+    smallAlteration(arr: type[]){
+        return this.switchLetters(arr);
+    }
+
     get range(){
         return factorial(this.alphabet.length)
     }

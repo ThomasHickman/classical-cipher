@@ -3,7 +3,7 @@ import Stat = require("../Stats/Stat")
 import Reporter = require("../Reporters/Reporter")
 import cc = require("../index")
 import _ = require("lodash")
-
+/*
 export interface SolverSettings {
     useLowestValue?: boolean;
     initKey?: any;
@@ -12,7 +12,7 @@ export interface SolverSettings {
     outerIterations?: number;
     keyLength?: number;
     testingLimit: number;
-}
+}*/
 
 export interface SolverParameters<T>{
     cipherText: string;
@@ -20,12 +20,12 @@ export interface SolverParameters<T>{
     stat?: Stat;
     solver?: Solver<T>;
     reporter?: Reporter;
-    settings?: SolverSettings;
+    settings?: any;
 }
 
 export interface SolverReturn<T> {
     text: string,
-    key: cc.keys.Key<T>
+    key: T
 }
 
 var neededSolverParameters = [
@@ -45,7 +45,9 @@ export function solve<T>(parameters: SolverParameters<T>){
     if(parameters.cipher == undefined){
         throw new Error("Cannot solve ciphertext with no specified cipher");
     }
-    _.defaults(parameters, parameters.cipher.defaultSolverParameters, defaultSolverParams);
+    _.defaultsDeep(parameters,
+        _.cloneDeep(parameters.cipher.defaultSolverParameters),
+        _.cloneDeep(defaultSolverParams));
 
     neededSolverParameters.forEach(param => {
         if(parameters[param] == undefined){

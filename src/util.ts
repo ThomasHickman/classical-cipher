@@ -27,8 +27,8 @@ export class Exception extends Error {
 
 export class NotImplementedException extends Exception {
     name = "NotImplementedException"
-    constructor(){
-        super("Function not implemented")
+    constructor(str = "Function not implemented"){
+        super(str)
     }
 }
 
@@ -40,11 +40,15 @@ export function generateUniformArray<type>(elementToRepeat: type, times: number,
     return retValue;
 }
 
+export function random_element<type>(arr: type[]){
+    return arr[_.random(0, arr.length - 1)]
+}
+
 export type Appendable = Array<any> | string;
 
 export function append<T>(arr: T[], element: T): T[];
 export function append(arr: string, element: string): string;
-export function append<T>(arr: T[] | string, element: any){
+export function append<T>(arr: T[] | string, element: any): T[] | string{
     if(typeof arr === "string"){
         arr += element;
         return arr;

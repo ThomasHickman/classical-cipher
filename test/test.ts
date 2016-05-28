@@ -1,6 +1,7 @@
 import cc = require("../dist/index");
 import assert = require("assert");
 import _ = require("lodash");
+import fs = require("fs");
 
 function get_diff_count(text1: string, text2: string){
     var diff_count = 0;
@@ -23,14 +24,15 @@ describe("solvers", () => {
     })
 
     it("solves transposition using hill climbing", () => {
-        var cipherText = "KLUSUSRKASKWASSRGAXLUPLUSSVYYNSKKNTNIINXKLAMUSKCUHVKUNDNTKLAADGIUSLRIYLRHAK";
-        var key = 'RHPMATGLUOFIWDNYBCSKVQXJEZ';
-        var plainText = "THISISATESTMESSAGEWHICHISSUPPOSTTOFOLLOWTHEDISTRIBUTIONOFTHEENGLISHALPHABET";
+        var plainText = fs.readFileSync("./test/cheese.txt").toString();//"THISISATESTMESSAGEWHICHISSUPPOSTTOFOLLOWTHEDISTRIBUTIONOFTHEENGLISHALPHABET";
+        var key = cc.ciphers.simpleSubstitution.keyInfo.generateRandom();//'RHPMATGLUOFIWDNYBCSKVQXJEZ';
+        var cipherText = cc.ciphers.simpleSubstitution.encrypt(plainText, key);
+        //"KLUSUSRKASKWASSRGAXLUPLUSSVYYNSKKNTNIINXKLAMUSKCUHVKUNDNTKLAADGIUSLRIYLRHAK";
         var result = cc.solvers.hillClimbing.solve({
             cipherText: cipherText,
             cipher: cc.ciphers.simpleSubstitution,
             stat: cc.stats.chiSquared,
-            reporter: cc.reporters.silentReporter
+            reporter: cc.reporters.stdout
         });
         assert(get_diff_count(plainText, result.text) < 10); // Hasn't got more than 10 differences
     })
