@@ -58,6 +58,7 @@
         "solvers.ts",
         "Solvers/BruteForce.ts",
         "Solvers/HillClimbing.ts",
+        "Solvers/SimmulatedAnnealing.ts",
         "Solvers/Solver.ts",
         "stats.ts",
         "Stats/ChiSquared.ts",

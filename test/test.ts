@@ -13,6 +13,22 @@ function get_diff_count(text1: string, text2: string){
     return diff_count;
 }
 
+var cheeseText = fs.readFileSync("./test/cheese.txt").toString();
+
+function cheeseTest<keyType>(cipher: cc.ciphers.Cipher<keyType>,
+        solver: cc.solvers.Solver<keyType>,
+        stat: cc.stats.Stat){
+    var key = cipher.keyInfo.generateRandom();
+    var cipherText = cipher.encrypt(cheeseText, key);
+    var result = solver.solve({
+        cipherText: cipherText,
+        cipher: cipher,
+        stat: stat,
+        reporter: cc.reporters.stdout
+    });
+    assert(get_diff_count(cheeseText, result.text) < 10);
+}
+
 describe("solvers", () => {
     it("solves ceasar shift using brute force", () => {
         assert(cc.solvers.bruteForce.solve({
@@ -23,7 +39,13 @@ describe("solvers", () => {
         }).text, "Test string!")
     })
 
+    it("solves transposition by simulated annealing", () => {
+        //cheeseTest(cc.ciphers.simpleSubstitution, cc.solvers.simmulatedAnnealing, cc.stats.chiSquared);
+    })
+
     it("solves transposition using hill climbing", () => {
+        cheeseTest(cc.ciphers.simpleSubstitution, cc.solvers.hillClimbing, cc.stats.chiSquared);
+        /*
         var plainText = fs.readFileSync("./test/cheese.txt").toString();//"THISISATESTMESSAGEWHICHISSUPPOSTTOFOLLOWTHEDISTRIBUTIONOFTHEENGLISHALPHABET";
         var key = cc.ciphers.simpleSubstitution.keyInfo.generateRandom();//'RHPMATGLUOFIWDNYBCSKVQXJEZ';
         var cipherText = cc.ciphers.simpleSubstitution.encrypt(plainText, key);
@@ -34,7 +56,7 @@ describe("solvers", () => {
             stat: cc.stats.chiSquared,
             reporter: cc.reporters.stdout
         });
-        assert(get_diff_count(plainText, result.text) < 10); // Hasn't got more than 10 differences
+        assert(get_diff_count(plainText, result.text) < 10); // Hasn't got more than 10 differences*/
     })
 })
 
