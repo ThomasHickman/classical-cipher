@@ -8,7 +8,6 @@ import {
 } from "../util"
 
 import _ = require("lodash");
-import cc = require("../index");
 
 function hill_climbing<T>(init: T, progress: (value: T) => T, weight: (value: T) => number){
     var curr_value = _.cloneDeep(init);

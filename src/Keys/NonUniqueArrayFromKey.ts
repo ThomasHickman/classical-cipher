@@ -1,4 +1,3 @@
-import _ = require("lodash")
 import {
     testKeyType,
     testNumericArrangementOfNumbers,
@@ -44,7 +43,7 @@ class NonUniqueArrayFromKey<type> implements Key<type[]>{
 
     getPrimitiveKey(key: any[]){
         testKeyType(key, "array");
-        return key.map(x => this.getKey(key.length).getPrimitiveKey(key));
+        return key.map(_ => this.getKey(key.length).getPrimitiveKey(key));
     }
 
     startGeneration(){

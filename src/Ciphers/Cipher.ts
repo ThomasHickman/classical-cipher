@@ -1,10 +1,11 @@
 import keys = require("../keys")
 import _ = require("lodash");
-import Stat = require("../Stats/Stat")
 
 import {
-    Solver,
-    DefaultSolverParameters
+    DefaultSolverParameters,
+    SolverParameters,
+    SolverReturn,
+    solve
 } from "../Solvers/Solver"
 
 import {
@@ -18,11 +19,6 @@ export interface EncyptionOptions{
 
 var EncyptionOptionsDefault = {
     formatResult: true
-}
-
-interface solvedCipherInfo<keyType> {
-    key: keyType;
-    solution: string;
 }
 
 export abstract class Cipher<keyType>{
@@ -57,10 +53,10 @@ export abstract class Cipher<keyType>{
         encrypt: (input: string, key: keyType) => string;
         decrypt: (input: string, key: keyType) => string;
     }*/
-    recommendedSolveMethod: any;
 
-    solve(x: void){
-        return Error("Not implemented yet");
+    solve(args: SolverParameters<keyType, any>){
+        args.cipher = this;
+        return solve(args)
     };
     keyInfo: keys.Key<keyType>;
 }

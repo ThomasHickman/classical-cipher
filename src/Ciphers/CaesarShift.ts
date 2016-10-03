@@ -12,8 +12,6 @@ import {
 
 } from "./../util"
 
-import _ = require("lodash")
-
 class CaesarShift extends Cipher<number> implements Cipher<number>{
     name = "Caesar Shift";
     keyInfo = new keys.Integer(0, 25);
