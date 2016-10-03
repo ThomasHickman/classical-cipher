@@ -1,15 +1,12 @@
 # classical-cipher
 Tools for decrypting, encrypting, and solving classical ciphers in JavaScript
 
-**This project is currently in development**
-
 ## Licence
 
 This project is licensed under the [MIT license (MIT)](LICENSE).
 
 ## Features
 ### Ciphers
-#### Working ciphers
 - Caesar shift
 - Simple substitution cipher
 - Vigenère cipher
@@ -18,25 +15,16 @@ This project is licensed under the [MIT license (MIT)](LICENSE).
 - Hill cipher
 - Railfence cipher
 
-#### Ciphers to fix
-
-- Playfair cipher
-
-#### Planned ciphers
-- Cadence cipher
-
-### Solvers
-- Brute force
-
-#### Planned solvers
-- Hill climbing
-- Simulated Annealing
-
-### Cipher statistics
-#### Working statistics
+### Statistics
 - Chi Squared
 
-#### Planned statistics
+### Solvers
+- Brute Force
+- Hill Climbing
 
+## Planned Features
+- Playfair cipher
+- Cadence cipher
+- Simulated Annealing
 - Quadram count
 - Bigram rate
