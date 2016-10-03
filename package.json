@@ -5,6 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "build": "tsc -p src && tsc -p test && tsc -p build-tools",
+    "prepublish": "npm run-script build",
     "test": "mocha -R spec"
   },
   "keywords": [
@@ -15,7 +16,8 @@
   "author": "Thomas Hickman",
   "license": "MIT",
   "devDependencies": {
-    "mocha": "2.x"
+    "mocha": "2.x",
+    "typescript": "~1.8"
   },
   "dependencies": {
     "lodash": "4.x"
