@@ -1,7 +1,7 @@
 export {Solver} from "./Solvers/Solver";
 
-import BruteForce = require("./Solvers/BruteForce")
-import HillClimbing = require("./Solvers/HillClimbing")
+import BruteForce from "./Solvers/BruteForce"
+import HillClimbing from "./Solvers/HillClimbing"
 import SimmulatedAnnealing = require("./Solvers/SimmulatedAnnealing");
 
 export var bruteForce = new BruteForce();

@@ -14,13 +14,16 @@ export interface SolverSettings {
     testingLimit: number;
 }*/
 
-export interface SolverParameters<T>{
-    cipherText: string;
-    cipher?: Cipher<T>;
+export interface DefaultSolverParameters<CipherKey, SolverSettings>{
+    cipher?: Cipher<CipherKey>;
     stat?: Stat;
-    solver?: Solver<T>;
+    solver?: Solver<CipherKey, SolverSettings>;
     reporter?: Reporter;
-    settings?: any;
+    settings?: SolverSettings;
+}
+
+export interface SolverParameters<CipherKey, SolverSettings> extends DefaultSolverParameters<CipherKey, SolverSettings>{
+    cipherText: string;
 }
 
 export interface SolverReturn<T> {
@@ -41,7 +44,7 @@ var defaultSolverParams = {
     settings: {}
 }
 
-export function solve<T>(parameters: SolverParameters<T>){
+export function solve(parameters: SolverParameters<any, any>){
     if(parameters.cipher == undefined){
         throw new Error("Cannot solve ciphertext with no specified cipher");
     }
@@ -58,12 +61,12 @@ export function solve<T>(parameters: SolverParameters<T>){
     return parameters.solver.rawSolve(parameters);
 }
 
-export abstract class Solver<T> {
+export abstract class Solver<T, SettingsObject> {
     static allSolvers = [];
     name: string;
-    abstract rawSolve<T>(args: SolverParameters<T>): SolverReturn<T>;
+    abstract rawSolve<T>(args: SolverParameters<T, SettingsObject>): SolverReturn<T>;
 
-    solve<T>(args: SolverParameters<T>){
+    solve<T>(args: SolverParameters<T, SettingsObject>){
         if (args.cipherText == "")
             throw Error("Cannot solve a plaintext of length 0");
         args.solver = this;

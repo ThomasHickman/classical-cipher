@@ -3,7 +3,8 @@ import _ = require("lodash");
 import Stat = require("../Stats/Stat")
 
 import {
-    Solver
+    Solver,
+    DefaultSolverParameters
 } from "../Solvers/Solver"
 
 import {
@@ -24,11 +25,6 @@ interface solvedCipherInfo<keyType> {
     solution: string;
 }
 
-export interface DefaultSolverParameters<T>{
-    stat?: Stat;
-    solver?: Solver<T>;
-}
-
 export abstract class Cipher<keyType>{
     static allCiphers = <Cipher<any>[]>[];
 
@@ -42,7 +38,7 @@ export abstract class Cipher<keyType>{
     abstract rawDecrypt(input: string, key: keyType): string;
 
     /***/
-    defaultSolverParameters: DefaultSolverParameters<keyType>;
+    defaultSolverParameters: DefaultSolverParameters<keyType, any>;
 
     private formattedCipherOperation(input: string, key: keyType,
                                     options: EncyptionOptions,

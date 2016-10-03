@@ -1,7 +1,7 @@
 import {Cipher} from "./Cipher"
 import keys = require("../keys");
 import ChiSquared = require("../Stats/ChiSquared")
-import BruteForce = require("../Solvers/BruteForce")
+import BruteForce from "../Solvers/BruteForce"
 
 import {
     letterCodeMap,

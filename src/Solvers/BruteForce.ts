@@ -3,11 +3,16 @@ import {
     SolverParameters
 } from "../Solvers/Solver"
 import _ = require("lodash");
-import cc = require("../index")
+import cc = require("../index");
 
-class BruteForce<T> extends Solver<T>{
+export interface Settings<T> {
+    initKey: T;
+    useLowestValue: boolean;
+}
+
+export default class BruteForce<T> extends Solver<T, Settings<T>>{
     name = "Brute Force";
-    rawSolve(args: SolverParameters<T>){
+    rawSolve(args: SolverParameters<T, Settings<T>>){
         _.defaults(args.settings, {
             needToPassBenchmark: true,
             initKey: args.cipher.keyInfo.startGeneration(),
@@ -52,5 +57,3 @@ class BruteForce<T> extends Solver<T>{
         }
     }
 }
-
-export = BruteForce

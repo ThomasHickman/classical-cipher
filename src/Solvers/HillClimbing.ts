@@ -14,9 +14,13 @@ function hill_climbing<T>(init: T, progress: (value: T) => T, weight: (value: T)
     var curr_value = _.cloneDeep(init);
 }
 
-class HillClimbing<T> extends Solver<T>{
+export interface Settings<T> {
+    initKey: T;
+}
+
+export default class HillClimbing<T> extends Solver<T, Settings<T>>{
     name = "Hill Climbing";
-    rawSolve(args: SolverParameters<T>){
+    rawSolve(args: SolverParameters<T, Settings<T>>){
         _.defaults(args.settings, {
             needToPassBenchmark: true,
             initKey: args.cipher.keyInfo.generateRandom(),
@@ -43,5 +47,3 @@ class HillClimbing<T> extends Solver<T>{
         }
     }
 }
-
-export = HillClimbing;

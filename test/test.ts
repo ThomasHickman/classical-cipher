@@ -16,7 +16,7 @@ function get_diff_count(text1: string, text2: string){
 var cheeseText = fs.readFileSync("./test/cheese.txt").toString();
 
 function cheeseTest<keyType>(cipher: cc.ciphers.Cipher<keyType>,
-        solver: cc.solvers.Solver<keyType>,
+        solver: cc.solvers.Solver<keyType, any>,
         stat: cc.stats.Stat){
     var key = cipher.keyInfo.generateRandom();
     var cipherText = cipher.encrypt(cheeseText, key);
