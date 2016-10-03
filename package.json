@@ -13,6 +13,10 @@
     "cipher",
     "classical"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ThomasHickman/classical-cipher.git"
+  },
   "author": "Thomas Hickman",
   "license": "MIT",
   "devDependencies": {
