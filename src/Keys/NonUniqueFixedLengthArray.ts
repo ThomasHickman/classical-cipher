@@ -16,7 +16,7 @@ class NonUniqueFixedLengthArray<type> implements Key<type[]> {
     }
 
     getPrimitiveKey(key: any){
-        if(_.isArray(key)){
+        if(_.isArray<type>(key)){
             return key
         }
         else{

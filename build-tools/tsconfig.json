@@ -11,7 +11,7 @@
         "noImplicitAny": false,
         "noImplicitUseStrict": false,
         "removeComments": true,
-        "noLib": true,
+        "noLib": false,
         "preserveConstEnums": true,
         "suppressImplicitAnyIndexErrors": true
     },
@@ -27,9 +27,8 @@
     },
     "files": [
         "build.ts",
-        "../typings/es6/lib.es6.d.ts",
-        "../typings/lodash/lodash.d.ts",
-        "../typings/mocha/mocha.d.ts",
-        "../typings/node/node.d.ts"
+        "../typings/globals/mocha/index.d.ts",
+        "../typings/index.d.ts",
+        "../typings/modules/lodash/index.d.ts"
     ]
 }
