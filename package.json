@@ -20,6 +20,8 @@
   "author": "Thomas Hickman",
   "license": "MIT",
   "devDependencies": {
+    "@types/lodash": "^4.14.36",
+    "@types/mocha": "^2.2.32",
     "mocha": "2.x",
     "typescript": "^1.8"
   },
