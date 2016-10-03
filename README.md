@@ -34,3 +34,16 @@ This project is licensed under the [MIT license (MIT)](LICENSE).
 ```bash
 npm run-script build
 ```
+
+## Example
+
+```javascript
+var cc = require("classical-cipher");
+
+console.log(cc.solvers.bruteForce.solve({
+    cipherText: "Alza zaypun!",
+    cipher: cc.ciphers.caesarShift,
+    stat: cc.stats.chiSquared,
+    reporter: cc.reporters.silentReporter
+}));// prints { text: 'Test string!', key: 7 }
+```

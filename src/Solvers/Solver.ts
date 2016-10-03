@@ -3,6 +3,8 @@ import Stat = require("../Stats/Stat")
 import Reporter = require("../Reporters/Reporter")
 import cc = require("../index")
 import _ = require("lodash")
+import util = require("../util")
+
 /*
 export interface SolverSettings {
     useLowestValue?: boolean;
@@ -19,7 +21,9 @@ export interface DefaultSolverParameters<CipherKey, SolverSettings>{
     stat?: Stat;
     solver?: Solver<CipherKey, SolverSettings>;
     reporter?: Reporter;
-    settings?: SolverSettings;
+    settings?: SolverSettings & {
+        formatResult: boolean
+    };
 }
 
 export interface SolverParameters<CipherKey, SolverSettings> extends DefaultSolverParameters<CipherKey, SolverSettings>{
@@ -41,10 +45,12 @@ var neededSolverParameters = [
 
 var defaultSolverParams = {
     reporter: cc.reporters.stdout,
-    settings: {}
+    settings: {
+        formatResult: false
+    }
 }
 
-export function solve(parameters: SolverParameters<any, any>){
+export function solve<keyType>(parameters: SolverParameters<keyType, any>){
     if(parameters.cipher == undefined){
         throw new Error("Cannot solve ciphertext with no specified cipher");
     }
@@ -58,7 +64,16 @@ export function solve(parameters: SolverParameters<any, any>){
         }
     })
 
-    return parameters.solver.rawSolve(parameters);
+    var rawSolve = parameters.solver.rawSolve(parameters);
+
+    if(parameters.settings.formatResult){
+        return rawSolve;
+    }
+
+    return <SolverReturn<keyType>>{
+        text: util.format(rawSolve.text, parameters.cipherText),
+        key: rawSolve.key
+    }
 }
 
 export abstract class Solver<T, SettingsObject> {
