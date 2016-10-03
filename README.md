@@ -28,3 +28,9 @@ This project is licensed under the [MIT license (MIT)](LICENSE).
 - Simulated Annealing
 - Quadram count
 - Bigram rate
+
+## Building
+
+```bash
+npm run-script build
+```
