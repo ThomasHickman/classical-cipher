@@ -1,7 +1,7 @@
 import Cipher from "../Ciphers/Cipher"
 import Stat = require("../Stats/Stat")
 import Reporter = require("../Reporters/Reporter")
-import cc = require("../index")
+import reporters = require("../reporters")
 import _ = require("lodash")
 import util = require("../util")
 
@@ -44,7 +44,7 @@ var neededSolverParameters = [
 ]
 
 var defaultSolverParams = {
-    reporter: cc.reporters.stdout,
+    reporter: reporters.stdout,
     settings: {
         formatResult: false
     }
