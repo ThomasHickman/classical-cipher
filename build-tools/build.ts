@@ -1,3 +1,5 @@
+// TODO: finish
+
 import _ = require("lodash");
 
 var cipherNames = [
