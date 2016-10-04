@@ -2,7 +2,7 @@
   "name": "classical-cipher",
   "version": "0.0.2",
   "description": "Tools for decrypting, encrypting, and solving classical ciphers",
-  "main": "src/index.js",
+  "main": "dist/index.js",
   "scripts": {
     "build": "tsc -p src && tsc -p test && tsc -p build-tools",
     "prepublish": "npm run-script build",
