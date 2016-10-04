@@ -45,8 +45,8 @@ export function testKeyType<T extends Function>(key: any, expectedType: "number"
             throw new InvalidKeyException(key, "is not an array")
         }
     }
-    else if(typeof expectedType === "object"){
-        if(!(key instanceof <Function>expectedType)){
+    else if(typeof expectedType === "function"){
+        if(!(key instanceof expectedType)){
             throw new InvalidKeyException(key, "is not an instance of" + expectedType.toString())
         }
     }
