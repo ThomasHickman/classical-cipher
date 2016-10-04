@@ -10,7 +10,11 @@ import {
 import _ = require("lodash");
 import cc = require("../index");
 
-class SimmulatedAnnealing<T> extends Solver<T>{
+export interface Options<T>{
+    initKey: T
+}
+
+export default class SimmulatedAnnealing<T> extends Solver<T, Options<T>>{
     name = "Simmulated Annealing";
 
     private P(oldWeight: number, newWeight: number, temp: number, lowerIsBetter: boolean){
@@ -23,7 +27,7 @@ class SimmulatedAnnealing<T> extends Solver<T>{
         return completed;
     }
 
-    rawSolve(args: SolverParameters<T>){
+    rawSolve(args: SolverParameters<T, Options<T>>){
         _.defaults(args.settings, {
             initKey: args.cipher.keyInfo.generateRandom(),
             iterations: 1000
@@ -58,5 +62,3 @@ class SimmulatedAnnealing<T> extends Solver<T>{
         }
     }
 }
-
-export = SimmulatedAnnealing;

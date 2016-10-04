@@ -18,7 +18,8 @@
     "include": [
         "**/*.ts",
         "**/*.tsx",
-        "../typings/**/*.ts"
+        "../typings/**/*.ts",
+        "../node_modules/**/*.ts"
     ],
     "compileOnSave": true,
     "buildOnSave": false,

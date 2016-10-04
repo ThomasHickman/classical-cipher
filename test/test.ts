@@ -1,3 +1,5 @@
+/// <reference types="mocha" />
+
 import cc = require("../dist/index");
 import assert = require("assert");
 import _ = require("lodash");
