@@ -1,0 +1,33 @@
+my
+
+# code editors
+
+.vscode
+.idea
+
+# ts files
+
+src
+*.ts
+*.tsx
+
+# js map files
+*.js.map
+
+typings
+
+logs
+*.log
+npm-debug.log*
+pids
+*.pid
+*.seed
+lib-cov
+coverage
+.grunt
+.lock-wscript
+build/Release
+node_modules
+jspm_packages
+.npm
+.node_repl_history
