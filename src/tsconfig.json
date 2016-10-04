@@ -17,7 +17,7 @@
         "suppressImplicitAnyIndexErrors": true,
         "outDir": "../dist"
     },
-    "filesGlob": [
+    "include": [
         "**/*.ts",
         "**/*.tsx",
         "../typings/**/*.ts"
@@ -25,46 +25,6 @@
     "compileOnSave": true,
     "buildOnSave": false,
     "atom": {
-        "rewriteTsconfig": true
-    },
-    "files": [
-        "ciphers.ts",
-        "Ciphers/Amsco.ts",
-        "Ciphers/CaesarShift.ts",
-        "Ciphers/Cipher.ts",
-        "Ciphers/cipherUtil.ts",
-        "Ciphers/ColumnTransposition.ts",
-        "Ciphers/HillCipher.ts",
-        "Ciphers/RailFence.ts",
-        "Ciphers/SimpleSubstitution.ts",
-        "Ciphers/Vigenere.ts",
-        "index.ts",
-        "keys.ts",
-        "Keys/Arrangement.ts",
-        "Keys/FixedArrangement.ts",
-        "Keys/Integer.ts",
-        "Keys/InvalidKeyException.ts",
-        "Keys/Key.ts",
-        "Keys/keysUtils.ts",
-        "Keys/MappedKey.ts",
-        "Keys/NonUniqueArrayFromKey.ts",
-        "Keys/NonUniqueFixedLengthArray.ts",
-        "Keys/NumericArrangement.ts",
-        "reporters.ts",
-        "Reporters/Reporter.ts",
-        "Reporters/SilentReporter.ts",
-        "Reporters/Stdout.ts",
-        "solvers.ts",
-        "Solvers/BruteForce.ts",
-        "Solvers/HillClimbing.ts",
-        "Solvers/Solver.ts",
-        "stats.ts",
-        "Stats/ChiSquared.ts",
-        "Stats/Stat.ts",
-        "Stats/statUtil.ts",
-        "util.ts",
-        "../typings/globals/mocha/index.d.ts",
-        "../typings/index.d.ts",
-        "../typings/modules/lodash/index.d.ts"
-    ]
+        "rewriteTsconfig": false
+    }
 }

@@ -21,7 +21,7 @@
   "license": "MIT",
   "devDependencies": {
     "mocha": "2.x",
-    "typescript": "^1.8"
+    "typescript": "^2.0"
   },
   "dependencies": {
     "lodash": "4.x"
