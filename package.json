@@ -1,6 +1,6 @@
 {
   "name": "classical-cipher",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Tools for decrypting, encrypting, and solving classical ciphers",
   "main": "dist/index.js",
   "scripts": {
